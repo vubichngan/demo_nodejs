@@ -1,0 +1,17 @@
+table{
+    width: 60%;
+    height: auto;
+    margin-top: 20px;
+    margin-left: 20%;
+}
+.action{
+    margin-left: 20%;
+}
+
+#menu{
+    position: sticky;
+    top:0;
+}
+.modal-header{
+    border-bottom: none;
+}
