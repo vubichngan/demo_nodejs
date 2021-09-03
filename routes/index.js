@@ -1,14 +1,9 @@
-const Word=require('../models/Word');
+const word=require('./word');
+const user=require('./user');
 
 function route(app){
-    app.get('/', (req, res) => {
-        Word.find({},function(err,word){
-            if(!err){
-                res.json(word);
-            }else{
-                res.status(400).json({Error:'ERROR!!!'});
-            }
-        });
-    })
+    app.use('/search',word);
+    app.use('/admin/user',user);
+    app.use('/:user',word);
 }
 module.exports=route;

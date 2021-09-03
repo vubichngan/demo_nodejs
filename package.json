@@ -22,6 +22,9 @@
   },
   "homepage": "https://github.com/vubichngan/demo_nodejs#readme",
   "dependencies": {
+    "@angular/cli": "^12.2.4",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^6.0.2"
   },
