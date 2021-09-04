@@ -13,6 +13,16 @@ class WordController{
         });
     }
 
+    getOne(req,res,next){
+        Word.find({_id: req.params.id},function(err,word){
+            if(!err){
+                res.send(word);
+            }else{
+                res.status(400).json({Error:'ERROR!!!'});
+            }
+        });
+    }
+
     create(req,res,next){
         const word=new Word(req.body);
         word.save()
@@ -24,7 +34,7 @@ class WordController{
 
     update(req,res,next){
         Word.updateOne({_id: req.params.id}, req.body)
-        .then(()=>res.send(word))
+        .then(()=>res.send("update successfull !!!"))
         .catch(next);
     }
 
