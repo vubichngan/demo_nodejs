@@ -15,16 +15,17 @@
     </nav>
 </nav>
 <h1 class="text-center mb-5">Danh sach tu can duyet</h1>
-<div class="ml-5 pl-3">
-    <input type="checkbox" class="mx-2"><label for="">Chon tat ca:</label>
-    <select name="" id="" class="mx-2">
-        <option value="">--Hanh dong--</option>
-        <option value="duyet">Duyet</option>
-        <option value="tuchoi">Tu choi</option>
+<form (ngSubmit)="updateWordList()">
+  <div class="ml-5 pl-3">
+    <input type="checkbox" class="mx-2" name="checkbox_all" [(ngModel)]="isSelected" (change)="checkUncheckAll()">
+    <label for="checkbox_all">Chon tat ca:</label>
+    <select class="mx-2" name="statusChecked" [(ngModel)]="status">
+        <option value="Da duyet">Duyet</option>
+        <option value="Tu choi">Tu choi</option>
     </select>
-    <button type="button" class="btn btn-primary mx-2">Thuc hien</button>
-</div>
-<table class="table">
+    <button type="submit" class="btn btn-primary mx-2" [disabled]="isDisableBtn">Thuc hien</button>
+  </div>
+  <table class="table">
     <thead class="thead-light">
       <tr class="text-center">
         <th scope="col">#</th>
@@ -39,41 +40,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>uuuu uuuuuuu bbbbbbbbbbb hhhhhhhhhhhhhhhhh hhhhhhhhh We'll never share your email with anyone else. We'll never share your email with anyone else. We'll never share your email with anyone else.</td>
-        <td>@mdo</td>
-        <td>uuuu uuuuuuu bbbbbbbbbbb hhhhhhhhhhhhhhhhh hhhhhhhhh We'll never share your email with anyone else. We'll never share your email with anyone else. We'll never share your email with anyone else.</td>
-        <td>Otto</td>
-        <td>We'll never share your email with anyone else. We'll never share your email with anyone else. We'll never share your email with anyone else.</td>
-        <td><button type="button" class="btn btn-primary">Duyet</button></td>
-        <td><button type="button" class="btn btn-danger">Tu_choi</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td><button type="button" class="btn btn-primary">Duyet</button></td>
-        <td><button type="button" class="btn btn-danger">Tu choi</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-        <td><button type="button" class="btn btn-primary">Duyet</button></td>
-        <td><button type="button" class="btn btn-danger">Tu choi</button></td>
+      <tr *ngFor="let word of wordList; index as i">
+        <td><input type="checkbox" name="itemCheckbox" [(ngModel)]="word.isChecked" (change)="isAllSelected()"></td>
+        <th scope="row">{{i+1}}</th>
+        <td>{{word.tu_en}}</td>
+        <td>{{word.nghia_en}}</td>
+        <td>{{word.tu_vi}}</td>
+        <td>{{word.nghia_vi}}</td>
+        <td><img src="" alt="anh"></td>
+        <td>{{word.tu_lienquan}}</td>
+        <td><button type="button" class="btn btn-primary" (click)="updateWordStatus(word._id,'da duyet')">Duyet</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="updateWordStatus(word._id,'tu choi')">Tu_choi</button></td>
       </tr>
     </tbody>
-</table>
+  </table>
+</form>
+

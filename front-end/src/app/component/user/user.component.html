@@ -20,55 +20,59 @@
   <button mat-button color="warn" (click)="onClick()">Upload</button>  
   <input [hidden]="true" type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" />
 </div> -->
-<div class="d-flex">
-  <div class="col-3 text-center">
-    <input type="checkbox" class="mx-2"><label for=""> Chon tat ca</label>
-    <button type="button" class="btn btn-primary mx-2" routerLink="/login" >Xoa</button> 
+<form (ngSubmit)="updateWordList()">
+  <div class="d-flex">
+    <div class="col-3 text-center">
+      <input type="checkbox" class="mx-2" name="checkbox_all" [(ngModel)]="isSelected" (change)="checkUncheckAll()">
+      <label for="checkbox_all"> Chon tat ca</label>
+      <button type="submit" class="btn btn-primary mx-2" [disabled]="isDisableBtn">Xoa</button> 
+    </div>
+    <!-- <div class="col-4">
+      <form>
+        <div class="form-group d-flex">
+          <label for="addWord" class="col-4 text-right mr-2">Them nhieu tu</label>
+          <input type="file" class="form-control-file" id="addWord">
+        </div>
+      </form>
+    </div> -->
+    <div class="text-right d-inline col-5">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Them mot tu</button>
+    </div>
   </div>
-  <div class="col-4">
-    <form>
-      <div class="form-group d-flex">
-        <label for="addWord" class="col-4 text-right mr-2">Them nhieu tu</label>
-        <input type="file" class="form-control-file" id="addWord">
-      </div>
-    </form>
-  </div>
-  <div class="text-right d-inline col-5">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Them mot tu</button>
-  </div>
-</div>
-    
-<table class="table">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">STT</th>
-      <th scope="col">Tu tieng anh</th>
-      <th scope="col">nghia tieng anh</th>
-      <th scope="col">Tu tieng viet</th>
-      <th scope="col">nghia tieng viet</th>
-      <th scope="col">anh minh hoa</th>
-      <th scope="col">Cac tu lien quan</th>
-      <th scope="col">Trang thai</th>
-      <th scope="col" colspan="2" class="text-center">Hanh dong</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let word of wordList; index as i">
-      <td><input type="checkbox"></td>
-      <th scope="row">{{i+1}}</th>
-      <td>{{word.tu_en}}</td>
-      <td>{{word.nghia_en}}</td>
-      <td>{{word.tu_vi}}</td>
-      <td>{{word.nghia_vi}}</td>
-      <td><img src="" alt="anh"></td>
-      <td>{{word.tu_lienquan}}</td>
-      <td>{{word.status}}</td>
-      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateWord" (click)="getWordId(word._id)">Edit</button></td>
-      <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Xoa</button></td>
-    </tr>
-  </tbody>
-</table>
+      
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">STT</th>
+        <th scope="col">Tu tieng anh</th>
+        <th scope="col">nghia tieng anh</th>
+        <th scope="col">Tu tieng viet</th>
+        <th scope="col">nghia tieng viet</th>
+        <th scope="col">anh minh hoa</th>
+        <th scope="col">Cac tu lien quan</th>
+        <th scope="col">Trang thai</th>
+        <th scope="col" colspan="2" class="text-center">Hanh dong</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let word of wordList; index as i">
+        <td><input type="checkbox" name="itemCheckbox" [(ngModel)]="word.isChecked" (change)="isAllSelected()"></td>
+        <th scope="row">{{i+1}}</th>
+        <td>{{word.tu_en}}</td>
+        <td>{{word.nghia_en}}</td>
+        <td>{{word.tu_vi}}</td>
+        <td>{{word.nghia_vi}}</td> 
+        <td><img src="" alt="anh"></td>
+        <td>{{word.tu_lienquan}}</td>
+        <td>{{word.status}}</td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateWord" (click)="getWordId(word._id)">Edit</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Xoa</button></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
 
   <!-- Modal create word-->
   <div class="modal fade modalword" id="exampleModal" name="modalword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

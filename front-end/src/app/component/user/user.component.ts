@@ -22,6 +22,9 @@ export class UserComponent implements OnInit {
   anh:String;
   tu_lienquan:String;
   status: String;
+  checkedUserList:any;
+  isDisableBtn:boolean;
+  isSelected:boolean;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
   constructor(private clientService: ClientService, private uploadService: UploadService) {
   }
@@ -29,11 +32,12 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.clientService.showWord().subscribe((response: any)=>{
       this.wordList=response;
+      this.wordList.forEach(function(element){element.isChecked=false;})
       console.log(response);
+      this.isDisableBtn=true;
+      this.isSelected=false;
     })
   }
-
-  
 
   getWordId(id: String){
     var word= new Word();
@@ -76,8 +80,7 @@ export class UserComponent implements OnInit {
       tu_vi:this.tu_vi,
       nghia_vi:this.nghia_vi,
       anh:this.anh,
-      tu_lienquan:this.tu_lienquan,
-      status:"chua duyet",
+      tu_lienquan:this.tu_lienquan
     };
     this.clientService.updateWord(id,words).subscribe((response: any)=>{
       console.log(response);
@@ -93,47 +96,83 @@ export class UserComponent implements OnInit {
     this.ngOnInit();
   }
 
-  uploadFile(file) {  
-    const formData = new FormData();  
-    formData.append('file', file.data);  
-    file.inProgress = true;  
-    this.uploadService.upload(formData).pipe(  
-      map(event => {  
-        switch (event.type) {  
-          case HttpEventType.UploadProgress:  
-            file.progress = Math.round(event.loaded * 100 / event.total);  
-            break;  
-          case HttpEventType.Response:  
-            return event;  
-        }
-        return "err";  
-      }),  
-      catchError((error: HttpErrorResponse) => {  
-        file.inProgress = false;  
-        return of(`${file.data.name} upload failed.`);  
-      })).subscribe((event: any) => {  
-        if (typeof (event) === 'object') {  
-          console.log(event.body);  
-        }  
-      });  
+  updateWordList(){
+    for(var i=0;i<this.checkedUserList.length;i++){
+      this.deleteWord(this.checkedUserList[i]._id);
+      console.log(this.checkedUserList[i]._id);
+    }
   }
 
-  private uploadFiles() {  
-    this.fileUpload.nativeElement.value = '';  
-    this.files.forEach(file => {  
-      this.uploadFile(file);  
-    });  
-}
-
-  onClick() {  
-    const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {  
-    for (let index = 0; index < fileUpload.files.length; index++)  
-    {  
-     const file = fileUpload.files[index];  
-     this.files.push({ data: file, inProgress: false, progress: 0});  
-    }  
-      this.uploadFiles();  
-    };  
-    fileUpload.click();  
+  checkUncheckAll() {
+    for (var i = 0; i < this.wordList.length; i++) {
+      this.wordList[i].isChecked = this.isSelected;
+    }
+    this.getCheckedItemList();
   }
+   
+  isAllSelected() {
+    this.isSelected = this.wordList.every(function(item:any) {
+        return item.isChecked == true;
+      })
+    this.getCheckedItemList();
+  }
+  
+  getCheckedItemList(){
+    this.checkedUserList = [];
+    for (var i = 0; i < this.wordList.length; i++) {
+      if(this.wordList[i].isChecked)
+      this.checkedUserList.push(this.wordList[i]);
+    }
+    if(this.checkedUserList.length>0){
+      this.isDisableBtn=false;
+    }else{
+      this.isDisableBtn=true;
+    }
+  }
+
+//   uploadFile(file) {  
+//     const formData = new FormData();  
+//     formData.append('file', file.data);  
+//     file.inProgress = true;  
+//     this.uploadService.upload(formData).pipe(  
+//       map(event => {  
+//         switch (event.type) {  
+//           case HttpEventType.UploadProgress:  
+//             file.progress = Math.round(event.loaded * 100 / event.total);  
+//             break;  
+//           case HttpEventType.Response:  
+//             return event;  
+//         }
+//         return "err";  
+//       }),  
+//       catchError((error: HttpErrorResponse) => {  
+//         file.inProgress = false;  
+//         return of(`${file.data.name} upload failed.`);  
+//       })).subscribe((event: any) => {  
+//         if (typeof (event) === 'object') {  
+//           console.log(event.body);  
+//         }  
+//       });  
+//   }
+
+//   private uploadFiles() {  
+//     this.fileUpload.nativeElement.value = '';  
+//     this.files.forEach(file => {  
+//       this.uploadFile(file);  
+//     });  
+// }
+
+//   onClick() {  
+//     const fileUpload = this.fileUpload.nativeElement;fileUpload.onchange = () => {  
+//     for (let index = 0; index < fileUpload.files.length; index++)  
+//     {  
+//      const file = fileUpload.files[index];  
+//      this.files.push({ data: file, inProgress: false, progress: 0});  
+//     }  
+//       this.uploadFiles();  
+//     };  
+//     fileUpload.click();  
+//   }
+
+
 }

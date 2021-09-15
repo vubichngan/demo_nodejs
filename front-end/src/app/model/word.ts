@@ -8,4 +8,5 @@ export class Word {
     tu_lienquan:String;
     iD_user:String;
     status:String;
+    isChecked:boolean;
 }

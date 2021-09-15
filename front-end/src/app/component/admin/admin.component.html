@@ -15,61 +15,49 @@
     </nav>
 </nav>
 <h1 class="text-center mb-5">Danh sach quan ly</h1>
-<div class="action d-flex">
+<form #form="ngForm" (ngSubmit)="updateUserList()">
+  <div class="action d-flex">
     <div class="text-center">
-        <input type="checkbox" class="mx-2">
-        <label for="">Chon tat ca:</label>
-        <select name="" id="" class="mx-2">
-            <option value="">--Hanh dong--</option>
-            <option value="duyet">Khoa</option>
-            <option value="tuchoi">Kich hoat</option>
+        <input type="checkbox" class="mx-2" name="checkbox_all" [(ngModel)]="isSelected" (change)="checkUncheckAll()">
+        <label for="checkbox_all">Chon tat ca:</label>
+        <select name="status" class="mx-2" name="statusChecked" [(ngModel)]="status" >
+            <option value="Khoa">Khoa</option>
+            <option value="Kich hoat">Kich hoat</option>
         </select>
-        <button type="button" class="btn btn-primary mx-2">Thuc hien</button>
+        <button type="submit" class="btn btn-primary btn-sm mx-2" [disabled]="isDisableBtn">Thuc hien</button>
     </div>
     
     <div class="text-right d-inline col-5">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Them quan ly</button>
     </div>
-</div>
-<table class="table text-center">
+  </div>
+  <table class="table text-center">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">STT</th>
         <th scope="col">User name</th>
+        <th scope="col">Phan quyen</th>
         <th scope="col">Trang thai</th>
         <th scope="col" colspan="2">Hanh dong</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Khoa</td>
-        <td><button type="button" class="btn btn-primary">Kich hoat</button></td>
-        <td><button type="button" class="btn btn-danger">Khoa</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td><button type="button" class="btn btn-primary">Kich hoat</button></td>
-        <td><button type="button" class="btn btn-danger">Khoa</button></td>
-      </tr>
-      <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td><button type="button" class="btn btn-primary">Kich hoat</button></td>
-        <td><button type="button" class="btn btn-danger">Khoa</button></td>
+      <tr *ngFor="let user of userList; index as i">
+        <td><input type="checkbox" name="itemCheckbox" (change)="isAllSelected()" [(ngModel)]="user.isChecked"></td>
+        <th scope="row">{{i+1}}</th>
+        <td>{{user.user_name}}</td>
+        <td>{{user.permission}}</td>
+        <td>{{user.status}}</td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateWord" (click)="updateUser(user._id,'Kich hoat')">Kich hoat</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="updateUser(user._id,'Khoa')">Khoa</button></td>
       </tr>
     </tbody>
   </table>
+</form>
+
   <!-- Modal -->
-  <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -79,13 +67,13 @@
           </button>
         </div>
         <div class="modal-body text-center">
-            <form>
+            <form #formCreate="ngForm" (submit)="createUser(formCreate)">
                 <div class="form-group">
-                  <input type="text" class="form-control" id="Username" placeholder="User name">
+                  <input type="text" class="form-control" name="user_name" placeholder="User name" [(ngModel)]="user_name">
                   <small id=""></small>
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control" id="Password1" placeholder="Password">
+                  <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]="password">
                   <small id="" ></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Them</button>

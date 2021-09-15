@@ -13,8 +13,38 @@ class WordController{
         });
     }
 
-    getOne(req,res,next){
+    getId(req,res,next){
         Word.find({_id: req.params.id},function(err,word){
+            if(!err){
+                res.send(word);
+            }else{
+                res.status(400).json({Error:'ERROR!!!'});
+            }
+        });
+    }
+
+    getStatus(req,res){
+        Word.find({status: req.params.status},function(err,word){
+            if(!err){
+                res.send(word);
+            }else{
+                res.status(400).json({Error:'ERROR!!!'});
+            }
+        });
+    }
+
+    getWord_vi(req,res){
+        Word.find({tu_vi: req.params.word, status: "da duyet"},function(err,word){
+            if(!err){
+                res.send(word);
+            }else{
+                res.status(400).json({Error:'ERROR!!!'});
+            }
+        });
+    }
+
+    getWord_en(req,res){
+        Word.find({tu_en: req.params.word,status: "da duyet"},function(err,word){
             if(!err){
                 res.send(word);
             }else{
