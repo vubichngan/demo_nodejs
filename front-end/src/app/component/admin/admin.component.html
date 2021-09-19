@@ -77,6 +77,13 @@
                   <small id="" ></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Them</button>
+                <div class="alert bg-success text-center text-white" role="alert" *ngIf='showSuccessMessage'>
+                  Register Successfully
+                </div>
+                <!-- Error message -->
+                <div class="alert bg-danger text-center text-white w-100%" role="alert" *ngIf='serverErrorMessage'>
+                  {{serverErrorMessage}}
+                </div>
             </form>
         </div>
       </div>

@@ -1,10 +1,19 @@
 form{
-    padding: 8px;
-    margin: 10px 40%;
+    margin: 5% 38%;
+    background: paleturquoise;
 }
 button{
-    width: 100%;
+    width: 88%;
+    margin-bottom: 24px;
 }
-small{
+
+h1{
+    margin-bottom: 30px;
+}
+
+label{
     color: red;
+    text-align: center;
+    width: 100%;
+    margin: 0;
 }

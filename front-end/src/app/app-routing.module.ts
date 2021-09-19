@@ -10,11 +10,11 @@ import { UserComponent } from './component/user/user.component';
 
 
 const routes: Routes = [
-  {path:'', component: HomeComponent},
+  {path:'', redirectTo: '/search', pathMatch: 'full'},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
   {path:'search', component: SearchComponent},
-  {path:'search/:type/:word', component: SearchComponent},
+  //{path:'search/:type/:word', component: SearchComponent},
   {path:'admin', component: AdminComponent},
   {path:'manage', component: ManageComponent},
   {path:'user', component: UserComponent},

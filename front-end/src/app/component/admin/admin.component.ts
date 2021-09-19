@@ -17,20 +17,24 @@ export class AdminComponent implements OnInit {
   isSelected:boolean;
   status:String;
   isDisableBtn:boolean;
+  showSuccessMessage:boolean;
+  serverErrorMessage:string;
   constructor(private clientService: ClientService) { 
   }
 
   ngOnInit(): void {
+    this.reset();
+  }
+
+  reset(){
     this.clientService.showUser().subscribe((response: any)=>{
       this.userList=response;
       this.userList.forEach(function(element){element.isChecked=false;})
-      console.log(response);
       this.status="Kich hoat";
       this.isSelected=false;
       this.isDisableBtn=true;
     })
   }
-
   createUser(form:NgForm){
     var user={
       user_name:this.user_name,
@@ -39,9 +43,18 @@ export class AdminComponent implements OnInit {
       status:"Kich hoat",
     };
     this.clientService.createUser(user).subscribe((response: any)=>{
-      console.log(response);
+      this.showSuccessMessage=true;
+      setTimeout(()=>this.showSuccessMessage=false,4000);
+      this.serverErrorMessage='';
+    },
+    err=>{
+      if(err.status===422){
+        this.serverErrorMessage=err.error.join('</br>');
+      }else{
+        this.serverErrorMessage='Something went wrong. Please contact admin';
+      }
     })
-    this.ngOnInit();
+    this.reset();
     form.resetForm();
   }
 
@@ -51,15 +64,13 @@ export class AdminComponent implements OnInit {
     this.clientService.updateUser(id,user).subscribe((response: any)=>{
       console.log(response);
     })
-    this.ngOnInit();
+    this.reset();
   }
 
   updateUserList(){
     for(var i=0;i<this.checkedUserList.length;i++){
       this.updateUser(this.checkedUserList[i]._id,this.status);
-      console.log(this.checkedUserList[i]._id);
     }
-    console.log(this.status);
   }
 
   checkUncheckAll() {
