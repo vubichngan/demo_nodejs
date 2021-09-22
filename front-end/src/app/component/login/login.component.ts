@@ -17,10 +17,11 @@ export class LoginComponent implements OnInit {
   constructor(private clientService: ClientService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.clientService.isLoggedIn())
+      this.router.navigateByUrl('/user');
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
     this.clientService.loginUser(form.value).subscribe(
       res=>{
         this.clientService.setToken(res['token']);
@@ -31,4 +32,7 @@ export class LoginComponent implements OnInit {
       }
     )
   }
+
+  
+
 }

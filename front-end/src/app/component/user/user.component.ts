@@ -6,6 +6,8 @@ import { catchError, map } from 'rxjs/operators';
 import { UploadService } from  '../../service/upload.service';
 import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -25,18 +27,53 @@ export class UserComponent implements OnInit {
   checkedUserList:any;
   isDisableBtn:boolean;
   isSelected:boolean;
+  userDetails;
+  userId;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
-  constructor(private clientService: ClientService, private uploadService: UploadService) {
+  constructor(private clientService: ClientService,private router: Router, private uploadService: UploadService) {
   }
 
   ngOnInit(): void {
+    
+    this.clientService.getUserProfile().subscribe(
+      res=>{
+        this.userDetails=res['user'].user_name;
+      },
+      err=>{
+        console.log(err);
+      });
+    this.userId= this.clientService.getUserPayload()._id;
+    this.reset();
+  }
+
+  alertWithSuccess(title){
+    Swal.fire({
+      icon: 'success',
+      title: title,
+      showConfirmButton: false,
+      timer: 2000,
+    }) ;
+  }
+  erroAlert(title)  
+  {  
+    Swal.fire({  
+      icon: 'error',  
+      title:title, 
+    })  
+  }  
+  reset(){
     this.clientService.showWord().subscribe((response: any)=>{
-      this.wordList=response;
+      this.wordList= response.filter(s => s.id_user==this.userId);
       this.wordList.forEach(function(element){element.isChecked=false;})
-      console.log(response);
+      console.log(this.wordList);
       this.isDisableBtn=true;
       this.isSelected=false;
     })
+  }
+
+  onLogout(){
+    this.clientService.deleteToken();
+    this.router.navigate(['/login']);
   }
 
   getWordId(id: String){
@@ -65,14 +102,16 @@ export class UserComponent implements OnInit {
       anh:this.anh,
       tu_lienquan:this.tu_lienquan,
       status:"chua duyet",
+      id_user:this.userId,
     };
-    this.clientService.createWord(words).subscribe((response: any)=>{
-      console.log(response);
-    })
-    this.ngOnInit();
     form.resetForm();
+    this.clientService.createWord(words).subscribe((response: any)=>{
+      this.reset();
+      this.alertWithSuccess(response);
+    })
   }
 
+  
   updateWord(id: any,form: NgForm){
     var words={
       tu_en: this.tu_en,
@@ -82,18 +121,24 @@ export class UserComponent implements OnInit {
       anh:this.anh,
       tu_lienquan:this.tu_lienquan
     };
-    this.clientService.updateWord(id,words).subscribe((response: any)=>{
-      console.log(response);
-    })
     form.resetForm();
-    this.ngOnInit();
+    this.clientService.updateWord(id,words).subscribe((response: any)=>{
+      this.alertWithSuccess(response);
+      this.reset();
+    },
+    err=>{
+      this.erroAlert('Update error: '+err);
+    })
   }
 
   deleteWord(id:any){
     this.clientService.deleteWord(id).subscribe((response: any)=>{
-      console.log(response);
-    })
-    this.ngOnInit();
+      this.reset();
+      this.alertWithSuccess(response);
+    },err=>{
+      this.erroAlert('Delete error: '+err);
+    }
+    )
   }
 
   updateWordList(){

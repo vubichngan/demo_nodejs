@@ -6,7 +6,7 @@ export class Word {
     nghia_vi:String;
     anh:String;
     tu_lienquan:String;
-    iD_user:String;
+    id_user:String;
     status:String;
     isChecked:boolean;
 }

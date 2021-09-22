@@ -1,5 +1,5 @@
 const passport =require('passport');
-const localStrategy=require('passport-local');
+const localStrategy=require('passport-local').Strategy;
 const mongoose=require('mongoose');
 
 const User=require('../models/User');

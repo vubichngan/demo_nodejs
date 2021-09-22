@@ -1,0 +1,4 @@
+loc port theo user/
+bang thong canh bao xoa /
+upload anh
+sua cac trang khac loc

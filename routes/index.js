@@ -6,4 +6,5 @@ function route(app){
     app.use('/api/word',word);
     
 }
-module.exports=route; 
+module.exports=route;
+ 

@@ -1,10 +1,13 @@
 import { WebRequestService } from './web-request.service';
 import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
+
+  noAuthHeader={ headers: new HttpHeaders({'NoAuth':'true'}) };
 
   constructor(private WebReqService: WebRequestService) { }
 
@@ -41,15 +44,7 @@ export class ClientService {
   }
 
   createUser(user:any){
-    return this.WebReqService.post('user/create',user);
-  }
-
-  loginUser(authCredentials){
-    return this.WebReqService.post('user/authenticate',authCredentials);
-  }
-
-  setToken(token:string){
-    localStorage.setItem('token', token);
+    return this.WebReqService.postU('user/create',user,this.noAuthHeader);
   }
 
   updateUser(_id:String, user: any){
@@ -59,5 +54,46 @@ export class ClientService {
   showUser(){
     return this.WebReqService.get('user');
   }
+
+  loginUser(authCredentials){
+    return this.WebReqService.postU('user/authenticate',authCredentials,this.noAuthHeader);
+  }
+
+  getUserProfile(){
+    return this.WebReqService.get('user/userProfile');
+  }
+
+  // Helper methods
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
+  setToken(token:string){
+    localStorage.setItem('token', token);
+  }
+
+  deleteToken(){
+    localStorage.removeItem('token');
+  }
+
+  getUserPayload(){
+    var token=this.getToken();
+    if(token){
+      var userPayload=atob(token.split('.')[1]);
+      return JSON.parse(userPayload);
+    }
+    else
+      return null;
+  }
+
+  isLoggedIn(){
+    var userPayload=this.getUserPayload();
+    if(userPayload)
+      return userPayload.exp > Date.now() / 1000;
+    else
+      return false;
+  }
+
+  
 
 }

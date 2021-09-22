@@ -56,7 +56,7 @@ class WordController{
     create(req,res,next){
         const word=new Word(req.body);
         word.save()
-        .then(()=>res.send(word))
+        .then(()=>res.json("Create successfull"))
         .catch(next);
         
         
@@ -64,13 +64,13 @@ class WordController{
 
     update(req,res,next){
         Word.updateOne({_id: req.params.id}, req.body)
-        .then(()=>res.send("update successfull !!!"))
+        .then(()=>res.json("Update successfull"))
         .catch(next);
     }
 
     delete(req,res,next){
         Word.deleteOne({_id: req.params.id})
-        .then(()=>res.send("req.params.id"))
+        .then(()=>res.json("Delete successfull"))
          .catch(next);
     }
 }

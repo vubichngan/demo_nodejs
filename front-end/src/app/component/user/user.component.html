@@ -4,10 +4,10 @@
         <ul class="navbar-nav mx-3">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  User name
+                {{userDetails}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Logout</a>
+                  <button class="dropdown-item" (click)="onLogout()">Logout</button>
                 </div>
               </li>
         </ul>
@@ -56,9 +56,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let word of wordList; index as i">
+      <tr *ngFor="let word of wordList | filter: userId; index as i">
         <td><input type="checkbox" name="itemCheckbox" [(ngModel)]="word.isChecked" (change)="isAllSelected()"></td>
-        <th scope="row">{{i+1}}</th>
+        <th scope="row">{{i+1}}</th> 
         <td>{{word.tu_en}}</td>
         <td>{{word.nghia_en}}</td>
         <td>{{word.tu_vi}}</td>
