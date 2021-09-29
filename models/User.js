@@ -37,7 +37,7 @@ User.methods.verifyPassword=function(password){
 };
 
 User.methods.generateJwt=function(){
-  return jwt.sign({_id:this._id},
+  return jwt.sign({_id:this._id,permission: this.permission},
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXP

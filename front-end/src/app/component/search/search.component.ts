@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
-import { Observable, Subject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
@@ -14,14 +12,11 @@ export class SearchComponent implements OnInit {
   opt:String;
   wordList:Word[];
   tu:string;
-  nghia:string;
-  tu_lienquan:string;
-  wordSearch:string;
-  t:string;
+  nghia:String;
+  tu_lienquan:String;
+  wordSearch:String;
+  t:String;
   isHide:boolean;
-  // searchText = new Subject();
-  // results: Observable<string[]>;
-  // words_en:any=[];
   constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
@@ -29,10 +24,7 @@ export class SearchComponent implements OnInit {
     this.t=this.wordSearch;
     this.opt="vi_vi";
     this.isHide=true;
-    // this.results = this.searchText.pipe(
-    //   startWith(''),
-    //   map((value: string) => this.filter(value))
-    // );
+    
   }
 
   reset(){
@@ -48,9 +40,9 @@ export class SearchComponent implements OnInit {
     var word =new Word();
     if(text!=""){
       if(this.opt==="en_en"||this.opt==="en_vi"){
-        this.clientService.getWord_en(text).subscribe((response: any)=>{
-          word=response;
-          if(response.length>0){
+        this.clientService.getWord().subscribe((response: any)=>{
+          word= response.filter(s => s.tu_en==text);
+          if(Object.keys(word).length>0){
             this.isHide=false;
             if(this.opt==="en_en"){
               this.tu=word[0].tu_en;
@@ -62,14 +54,12 @@ export class SearchComponent implements OnInit {
               this.tu_lienquan=word[0].tu_lienquan;
             }
           }
-            
         })
-          
       }else{
-        this.clientService.getWord_vi(text).subscribe((response: any)=>{
-          word=response;
-          if(response.length>0){
-            this.isHide=false;
+        this.clientService.getWord().subscribe((response: any)=>{
+          word= response.filter(s => s.tu_vi==text);
+          if(Object.keys(word).length>0){
+            this.isHide=false; 
             if(this.opt==="vi_vi"){
               this.tu=word[0].tu_vi;
               this.nghia=word[0].nghia_vi;

@@ -18,6 +18,9 @@ import { AdminComponent } from './component/admin/admin.component';
 import { SearchComponent } from './component/search/search.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ManageComponent } from './component/manage/manage.component';
+import { NewWordComponent } from './component/user/new-word/new-word.component';
+import { EditWordComponent } from './component/user/edit-word/edit-word.component';
+import { ListWordComponent } from './component/user/list-word/list-word.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { ManageComponent } from './component/manage/manage.component';
     AdminComponent,
     SearchComponent,
     RegisterComponent,
-    ManageComponent
+    ManageComponent,
+    NewWordComponent,
+    EditWordComponent,
+    ListWordComponent
   ],
   imports: [
     BrowserModule,

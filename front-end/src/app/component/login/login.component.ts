@@ -17,15 +17,19 @@ export class LoginComponent implements OnInit {
   constructor(private clientService: ClientService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.clientService.isLoggedIn())
-      this.router.navigateByUrl('/user');
   }
 
   onSubmit(form: NgForm){
     this.clientService.loginUser(form.value).subscribe(
       res=>{
         this.clientService.setToken(res['token']);
-        this.router.navigateByUrl('/user');
+        if(this.clientService.getUserPayload().permission==="2"){
+          this.router.navigateByUrl('/user/list-word');
+        }else if(this.clientService.getUserPayload().permission==="1"){
+          this.router.navigateByUrl('/manage');
+        }else
+          this.router.navigateByUrl('/admin');
+        
       },
       err=>{
         this.serverErrorMessage=err.error.message;

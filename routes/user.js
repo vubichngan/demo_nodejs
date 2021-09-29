@@ -5,6 +5,7 @@ const jwtHelper=require('../config/jwtHelper');
 
 
 route.post('/create',userController.create);
+route.delete('/delete/:id',userController.delete);
 route.post('/authenticate',userController.authenticate);
 route.put('/update/:id',userController.update);
 route.get('/userProfile',jwtHelper.verifyJwtToken,userController.userProfile);

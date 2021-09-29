@@ -23,35 +23,23 @@ export class ClientService {
     return this.WebReqService.delete('word/delete/'+_id);
   }
 
-  showWord(){
+  getWord(){
     return this.WebReqService.get('word');
-  }
-
-  showWordId(_id: String){
-    return this.WebReqService.get('word/'+_id);
-  }
-
-  showWordStatus(status: any){
-    return this.WebReqService.get('word/status/'+status);
-  }
-
-  getWord_vi( word:any){
-    return this.WebReqService.get('word/word_vi/'+word);
-  }
-
-  getWord_en( word:any){
-    return this.WebReqService.get('word/word_en/'+word);
   }
 
   createUser(user:any){
     return this.WebReqService.postU('user/create',user,this.noAuthHeader);
   }
 
+  deleteUser(_id: String){
+    return this.WebReqService.delete('user/delete/'+_id);
+  }
+
   updateUser(_id:String, user: any){
     return this.WebReqService.put('user/update/'+_id,user);
   }
 
-  showUser(){
+  getUser(){
     return this.WebReqService.get('user');
   }
 

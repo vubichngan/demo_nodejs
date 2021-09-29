@@ -1,24 +1,4 @@
-table{
-    width: 90%;
-    height: auto;
-    margin-top: 20px;
-    margin-left: 5%;
-}
 
-.text-right button{
-    margin-right: 10%;
-}
-.col-4{
-    padding: 0;
-}
-.modal-header{
-    padding-bottom: 0;
-    border-bottom: none;
-}
-.modal-footer{
-    display: block;
-    border-top: none;
-}
 #menu{
     position: sticky;
     top:0;

@@ -4,39 +4,39 @@
         <ul class="navbar-nav mx-3">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  User name
+                  {{userDetails}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Logout</a>
+                  <button class="dropdown-item" (click)="onLogout()">Logout</button>
                 </div>
               </li>
         </ul>
       </div>
     </nav>
 </nav>
-<h1 class="text-center mb-5">Danh sach tu can duyet</h1>
+<h1 class="text-center mb-5">Danh sách cần duyệt</h1>
 <form (ngSubmit)="updateWordList()">
   <div class="ml-5 pl-3">
     <input type="checkbox" class="mx-2" name="checkbox_all" [(ngModel)]="isSelected" (change)="checkUncheckAll()">
-    <label for="checkbox_all">Chon tat ca:</label>
+    <label for="checkbox_all">Chọn tất cả:</label>
     <select class="mx-2" name="statusChecked" [(ngModel)]="status">
-        <option value="Da duyet">Duyet</option>
-        <option value="Tu choi">Tu choi</option>
+        <option value="Đã duyệt">Duyệt</option>
+        <option value="Từ chối">Từ chối</option>
     </select>
-    <button type="submit" class="btn btn-primary mx-2" [disabled]="isDisableBtn">Thuc hien</button>
+    <button type="submit" class="btn btn-primary mx-2" [disabled]="isDisableBtn">Thực hiện</button>
   </div>
   <table class="table">
     <thead class="thead-light">
       <tr class="text-center">
         <th scope="col">#</th>
         <th scope="col">STT</th>
-        <th scope="col">Tu tieng anh</th>
-        <th scope="col">nghia tieng anh</th>
-        <th scope="col">Tu tieng viet</th>
-        <th scope="col">nghia tieng viet</th>
-        <th scope="col">anh minh hoa</th>
-        <th scope="col">Cac tu lien quan</th>
-        <th scope="col" colspan="2">Hanh dong</th>
+        <th scope="col">Từ tiếng Anh</th>
+        <th scope="col">Nghĩa tiếng Anh</th>
+        <th scope="col">Từ tiếng Việt</th>
+        <th scope="col">Nghĩa tiếng Việt</th>
+        <th scope="col">Ảnh minh họa</th>
+        <th scope="col">Các từ liên quan</th>
+        <th scope="col" colspan="2" class="text-center">Hành động</th>
       </tr>
     </thead>
     <tbody>
@@ -49,8 +49,8 @@
         <td>{{word.nghia_vi}}</td>
         <td><img src="" alt="anh"></td>
         <td>{{word.tu_lienquan}}</td>
-        <td><button type="button" class="btn btn-primary" (click)="updateWordStatus(word._id,'da duyet')">Duyet</button></td>
-        <td><button type="button" class="btn btn-danger" (click)="updateWordStatus(word._id,'tu choi')">Tu_choi</button></td>
+        <td><button type="button" class="btn btn-primary" (click)="updateWordStatus(word._id,'da duyet')">Duyệt</button></td>
+        <td><button type="button" class="btn btn-danger" (click)="updateWordStatus(word._id,'tu choi')">Từ chối</button></td>
       </tr>
     </tbody>
   </table>

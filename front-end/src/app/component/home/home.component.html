@@ -1,31 +1,17 @@
-<nav id="menu">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-</nav>
-<div class="nav justify-content-center">
-    <img src="https://sg-res.9appsinstall.com/sg/res/jpg/5e/b7/9cc50186749cdb4f5207851c6373-1od1.jpg?x-oss-process=style/mq200" alt="icon dictionary">
-</div>
-<div class="nav justify-content-center">
-  <form class="form-inline my-2 my-lg-0 nav justify-content-center">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="wordSearch">
-    <select name="opt" [(ngModel)]="opt">
-      <option value="vi_en">Việt - Anh</option>
-      <option value="en_vi">Anh - Việt</option>
-      <option value="en_en">Anh - Anh</option>
-      <option value="vi_vi">Việt - Việt</option>
-    </select>
-    <a class="btn btn-primary my-2 my-sm-0" 
-        [routerLink]="['/search',opt,wordSearch]">Search
-    </a>
-    </form>
-</div>
+<h1>upload image</h1>
+<form [formGroup]="form" (submit)="onSubmit()">
+	<div >
+		<input type="file" (change)="onFileSelect($event)">
+		<div *ngIf="imgData">
+			<img [src]="imgData">
+		</div>
+	</div>
+	<button type="submit" class="btn btn-success">Upload</button>
+</form>
+<a routerLink='/home/new-word'>new-word</a>
+<a routerLink='/home/edit-word'>edit-word</a>
+<router-outlet></router-outlet>
+<!-- Shareable short link of uoloaded file -->
+
+
+

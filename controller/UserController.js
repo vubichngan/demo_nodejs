@@ -18,7 +18,7 @@ class UserController{
         const user=new User(req.body);
         user.save((err,doc)=>{
             if(!err)
-                res.send(doc)
+                res.json(doc)
             else{
                 if(err.code===11000)
                     res.status(422).json(['Duplicate user name found.']);
@@ -27,6 +27,12 @@ class UserController{
             }
 
         })
+    }
+
+    delete(req,res,next){
+        User.deleteOne({_id: req.params.id})
+        .then(()=>res.json("Delete successfull"))
+         .catch(next);
     }
 
     update(req,res,next){

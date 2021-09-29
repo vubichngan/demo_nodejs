@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     var user=new User();
     user.user_name=form.value.UserName;
     user.password=form.value.Password;
-    user.permission="Người dùng thường";
+    user.permission="2";
     user.status="Kích hoạt";
     console.log(user);
     this.clientService.createUser(user).subscribe((response: any)=>{

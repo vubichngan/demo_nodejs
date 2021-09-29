@@ -1,11 +1,11 @@
 table{
-    width: 60%;
+    width: 80%;
     height: auto;
     margin-top: 20px;
-    margin-left: 20%;
+    margin-left: 10%;
 }
 .action{
-    margin-left: 20%;
+    margin-left: 10%;
 }
 
 #menu{
@@ -14,4 +14,11 @@ table{
 }
 .modal-header{
     border-bottom: none;
+}
+
+.modal label{
+    color: red;
+    text-align: center;
+    width: 100%;
+    margin: 0;
 }

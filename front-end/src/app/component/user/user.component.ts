@@ -1,13 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
-import { of } from 'rxjs';  
-import { catchError, map } from 'rxjs/operators';  
-import { UploadService } from  '../../service/upload.service';
-import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
-import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
+import { FormGroup,FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-user',
@@ -15,26 +12,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  wordList:Word[];
-  wordId:String;
-  tu_en:String;
-  nghia_en:String;
-  tu_vi:String;
-  nghia_vi:String;
-  anh:String;
-  tu_lienquan:String;
-  status: String;
-  checkedUserList:any;
-  isDisableBtn:boolean;
-  isSelected:boolean;
+  
+  
+  // form: FormGroup;
   userDetails;
   userId;
+  imgData:String;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
-  constructor(private clientService: ClientService,private router: Router, private uploadService: UploadService) {
+  constructor(private clientService: ClientService,private router: Router, private appComponent: AppComponent) {
   }
 
   ngOnInit(): void {
-    
     this.clientService.getUserProfile().subscribe(
       res=>{
         this.userDetails=res['user'].user_name;
@@ -43,135 +31,34 @@ export class UserComponent implements OnInit {
         console.log(err);
       });
     this.userId= this.clientService.getUserPayload()._id;
-    this.reset();
+    
   }
-
-  alertWithSuccess(title){
-    Swal.fire({
-      icon: 'success',
-      title: title,
-      showConfirmButton: false,
-      timer: 2000,
-    }) ;
-  }
-  erroAlert(title)  
-  {  
-    Swal.fire({  
-      icon: 'error',  
-      title:title, 
-    })  
-  }  
-  reset(){
-    this.clientService.showWord().subscribe((response: any)=>{
-      this.wordList= response.filter(s => s.id_user==this.userId);
-      this.wordList.forEach(function(element){element.isChecked=false;})
-      console.log(this.wordList);
-      this.isDisableBtn=true;
-      this.isSelected=false;
+  newForm(form){
+    form.form= new FormGroup({
+      wordId: new FormControl(null),
+      tu_en: new FormControl(null),
+      nghia_en: new FormControl(null),
+      tu_vi: new FormControl(null),
+      nghia_vi: new FormControl(null),
+      tu_lienquan: new FormControl(null),
+      anh: new FormControl(null),
+      status: new FormControl(null),
     })
   }
-
   onLogout(){
-    this.clientService.deleteToken();
-    this.router.navigate(['/login']);
-  }
-
-  getWordId(id: String){
-    var word= new Word();
-    this.clientService.showWordId(id).subscribe((response: any)=>{
-      console.log(response);
-      word=response;
-      this.tu_en=word[0].tu_en;
-      this.tu_vi=word[0].tu_vi;
-      this.nghia_en=word[0].nghia_en;
-      this.nghia_vi=word[0].nghia_vi;
-      //this.anh=word[0].anh;
-      this.tu_lienquan=word[0].tu_lienquan;
-      this.status=word[0].status;
-      this.wordId=word[0]._id;
-      console.log(word[0].tu_en);
-    })
-  }
-
-  createWordUs(form:NgForm){
-    var words={
-      tu_en: this.tu_en,
-      nghia_en:this.nghia_en,
-      tu_vi:this.tu_vi,
-      nghia_vi:this.nghia_vi,
-      anh:this.anh,
-      tu_lienquan:this.tu_lienquan,
-      status:"chua duyet",
-      id_user:this.userId,
-    };
-    form.resetForm();
-    this.clientService.createWord(words).subscribe((response: any)=>{
-      this.reset();
-      this.alertWithSuccess(response);
-    })
-  }
-
-  
-  updateWord(id: any,form: NgForm){
-    var words={
-      tu_en: this.tu_en,
-      nghia_en:this.nghia_en,
-      tu_vi:this.tu_vi,
-      nghia_vi:this.nghia_vi,
-      anh:this.anh,
-      tu_lienquan:this.tu_lienquan
-    };
-    form.resetForm();
-    this.clientService.updateWord(id,words).subscribe((response: any)=>{
-      this.alertWithSuccess(response);
-      this.reset();
-    },
-    err=>{
-      this.erroAlert('Update error: '+err);
-    })
-  }
-
-  deleteWord(id:any){
-    this.clientService.deleteWord(id).subscribe((response: any)=>{
-      this.reset();
-      this.alertWithSuccess(response);
-    },err=>{
-      this.erroAlert('Delete error: '+err);
-    }
-    )
-  }
-
-  updateWordList(){
-    for(var i=0;i<this.checkedUserList.length;i++){
-      this.deleteWord(this.checkedUserList[i]._id);
-      console.log(this.checkedUserList[i]._id);
-    }
-  }
-
-  checkUncheckAll() {
-    for (var i = 0; i < this.wordList.length; i++) {
-      this.wordList[i].isChecked = this.isSelected;
-    }
-    this.getCheckedItemList();
-  }
-   
-  isAllSelected() {
-    this.isSelected = this.wordList.every(function(item:any) {
-        return item.isChecked == true;
-      })
-    this.getCheckedItemList();
+    this.appComponent.onLogout(this);
   }
   
-  getCheckedItemList(){
-    this.checkedUserList = [];
-    for (var i = 0; i < this.wordList.length; i++) {
-      if(this.wordList[i].isChecked)
-      this.checkedUserList.push(this.wordList[i]);
-    }
-    if(this.checkedUserList.length>0){
-      this.isDisableBtn=false;
-    }else{
-      this.isDisableBtn=true;
+  onFileSelect(event: Event,form){
+    const file=(event.target as HTMLInputElement).files[0];
+    form.form.patchValue({anh:file});
+    const allowedMimeTypes=["image/png","image/jpeg","image/jpg"];
+    if(file && allowedMimeTypes.includes(file.type)){
+      const reader = new FileReader();
+      reader.onload=()=>{
+        form.imgData=reader.result as string;
+      };
+      reader.readAsDataURL(file);
     }
   }
 
