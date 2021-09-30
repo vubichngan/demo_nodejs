@@ -1,6 +1,6 @@
 
 <h1 class="text-center mb-3">Sửa từ</h1>
-<form [formGroup]="form" (submit)="updateWord(67)">
+<form [formGroup]="form" (submit)="updateWord()">
   <div class="d-flex">
     <div class="col-6">
       <div class="form-group">
@@ -27,8 +27,7 @@
       </div>
       <div class="form-group d-flex">
           <label class="col-4">Ảnh minh họa: </label>
-          <input type="file" class="form-control-file" name="anh" formControlName="anh"
-          (change)="onFileSelect($event)">
+          <input type="file" class="form-control-file" name="anh" (change)="onFileSelect($event)">
       </div>
       <div>
         <img [src]="imgData">

@@ -26,8 +26,19 @@ class WordController{
     }
 
     update(req,res,next){
-        Word.updateOne({_id: req.params.id}, req.body)
-        .then(()=>res.json("Update successfull"))
+        const word=new Word(req.body);
+        //res.json(word);
+        Word.updateOne({_id: req.params.id}, word)
+        .then(()=>res.json(word))
+        .catch(next);
+    }
+
+    updateImg(req,res,next){
+        const word=new Word(req.body);
+        word.anh='http://localhost:3000/images/'+req.file.filename;
+        //res.json(word)
+        Word.updateOne({_id: req.params.id}, word)
+        .then(()=>res.json(word))
         .catch(next);
     }
 

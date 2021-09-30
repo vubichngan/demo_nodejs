@@ -17,7 +17,6 @@ export class ListWordComponent implements OnInit {
   nghia_en:String;
   tu_vi:String;
   nghia_vi:String;
-  anh;
   tu_lienquan:String;
   status: String;
   wordList:Word[];
@@ -41,19 +40,7 @@ export class ListWordComponent implements OnInit {
   }
 
   getWordId(id: String){
-    var word= new Word();
-    this.clientService.getWord().subscribe((response: any)=>{
-      word= response.filter(s => s._id==id);
-      this.tu_en=word[0].tu_en;
-      this.tu_vi=word[0].tu_vi;
-      this.nghia_en=word[0].nghia_en;
-      this.nghia_vi=word[0].nghia_vi;
-      //this.anh=word[0].anh;
-      this.tu_lienquan=word[0].tu_lienquan;
-      this.status=word[0].status;
-      this.wordId=word[0]._id;
-      console.log(word[0].tu_en);
-    })
+    this.userComponent.wordId=id;
   }
 
   checkUncheckAll() {

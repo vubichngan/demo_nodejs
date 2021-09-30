@@ -15,6 +15,7 @@ export class UserComponent implements OnInit {
   
   
   // form: FormGroup;
+  wordId;
   userDetails;
   userId;
   imgData:String;
@@ -35,7 +36,6 @@ export class UserComponent implements OnInit {
   }
   newForm(form){
     form.form= new FormGroup({
-      wordId: new FormControl(null),
       tu_en: new FormControl(null),
       nghia_en: new FormControl(null),
       tu_vi: new FormControl(null),
@@ -61,6 +61,8 @@ export class UserComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  
 
 //   uploadFile(file) {  
 //     const formData = new FormData();  

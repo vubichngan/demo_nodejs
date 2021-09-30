@@ -45,7 +45,7 @@
           <td><img src="{{word.anh}}" alt="anh"></td>
           <td>{{word.tu_lienquan}}</td>
           <!-- <td>{{word.status}}</td> -->
-          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateWord" (click)="getWordId(word._id)">Edit</button></td>
+          <td><a routerLink='/user/edit-word' type="button" class="btn btn-primary" (click)="getWordId(word._id)">Edit</a></td>
           <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Delete</button></td>
         </tr>
       </tbody>

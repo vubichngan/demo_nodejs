@@ -19,6 +19,10 @@ export class ClientService {
     return this.WebReqService.put('word/update/'+_id,word);
   }
 
+  updateImg(_id:String, word: any){
+    return this.WebReqService.put('word/updateImg/'+_id,word);
+  }
+
   deleteWord(_id: String){
     return this.WebReqService.delete('word/delete/'+_id);
   }

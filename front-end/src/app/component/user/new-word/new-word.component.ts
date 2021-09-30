@@ -24,10 +24,7 @@ export class NewWordComponent implements OnInit {
     this.userComponent.newForm(this);
     this.imgData="/assets/image/image.png"
   }
-  onSubmit(){
-      console.log(3435);
-      this.form.reset();
-  }
+  
   onFileSelect(event: Event){
     this.userComponent.onFileSelect(event,this);
     console.log( this.form.value.anh);

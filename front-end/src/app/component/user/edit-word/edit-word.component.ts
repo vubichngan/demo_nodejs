@@ -3,7 +3,7 @@ import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
 import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl} from '@angular/forms';
 
 
 
@@ -14,39 +14,68 @@ import { FormGroup } from '@angular/forms';
 })
 export class EditWordComponent implements OnInit {
 
-  // wordId:String;
-  // tu_en:String;
-  // nghia_en:String;
-  // tu_vi:String;
-  // nghia_vi:String;
-  // anh;
-  // tu_lienquan:String;
-  // status: String;
   form:FormGroup;
   imgData: string;
+  id;
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
     this.userComponent.newForm(this);
-    this.imgData="/assets/image/image.png"
+    this.setWord();
+    this.id=this.userComponent.wordId;
   }
 
   onFileSelect(event: Event){
     this.userComponent.onFileSelect(event,this);
   }
 
-  updateWord(id: any){
+  setWord(){
+    var word= new Word();
+    this.clientService.getWord().subscribe((response: any)=>{
+      word= response.filter(s => s._id==this.id);
+      this.imgData=word[0].anh;
+      this.form= new FormGroup({
+        tu_en: new FormControl(word[0].tu_en),
+        nghia_en: new FormControl(word[0].nghia_en),
+        tu_vi: new FormControl(word[0].tu_vi),
+        nghia_vi: new FormControl(word[0].nghia_vi),
+        tu_lienquan: new FormControl(word[0].tu_lienquan),
+        anh: new FormControl(null),
+      })
+    })
+  }
+  updateWord(){
+    const profileData = new FormData();
+    // profileData.append("_id", this.id);
+    // profileData.append("tu_en", this.form.value.tu_en);
+    // profileData.append("nghia_en", this.form.value.nghia_en);
+    // profileData.append("tu_vi", this.form.value.tu_vi);
+    // profileData.append("nghia_vi", this.form.value.nghia_vi);
+    // profileData.append("tu_lienquan", this.form.value.tu_lienquan);
+    // profileData.append("anh", this.form.value.anh);
+    if(this.form.value.anh!=null){
+      profileData.append("_id", this.id);
+      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+    this.clientService.updateImg(this.id,profileData).subscribe((response: any)=>{
+       console.log(response);
+      this.appComponent.alertWithSuccess(response);
+    })
+    }
+     
     var words={
+      _id:this.id,
       tu_en: this.form.value.tu_en,
       nghia_en:this.form.value.nghia_en,
       tu_vi:this.form.value.tu_vi,
       nghia_vi:this.form.value.nghia_vi,
-      anh:this.form.value.anh,
       tu_lienquan:this.form.value.tu_lienquan,
     };
-    this.imgData=null;
-    this.form.reset();
-    this.clientService.updateWord(id,words).subscribe((response: any)=>{
+    // this.imgData=null;
+    // this.form.reset();
+    console.log(words);
+    console.log(this.id);
+    this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
+      console.log(response);
       // this.reset();
       this.appComponent.alertWithSuccess(response);
     },
