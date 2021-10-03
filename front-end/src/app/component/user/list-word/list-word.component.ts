@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
-import { Word } from 'src/app/model/word';
 import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
 
@@ -12,30 +11,21 @@ import { UserComponent } from '../user.component';
 })
 export class ListWordComponent implements OnInit {
 
-  wordId:String;
-  tu_en:String;
-  nghia_en:String;
-  tu_vi:String;
-  nghia_vi:String;
-  tu_lienquan:String;
-  status: String;
-  wordList:Word[];
-  checkedUserList:any;
-  isDisableBtn:boolean;
-  isSelected:boolean;
+   status: String;
+  
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
-    this.reset();
   }
 
-  reset(){
+  reset(component){
     this.clientService.getWord().subscribe((response: any)=>{
-      this.wordList= response.filter(s => s.id_user==this.userComponent.userId);
-      this.wordList.forEach(function(element){element.isChecked=false;})
-      console.log(this.wordList);
-      this.isDisableBtn=true;
-      this.isSelected=false;
+      component.wordList= response.filter(s => s.id_user==this.userComponent.userId);
+      component.wordList= response.filter(s => s.status===this.status);
+      component.wordList.forEach(function(element){element.isChecked=false;})
+      console.log(component.wordList);
+      component.isDisableBtn=true;
+      component.isSelected=false;
     })
   }
 
@@ -43,36 +33,36 @@ export class ListWordComponent implements OnInit {
     this.userComponent.wordId=id;
   }
 
-  checkUncheckAll() {
-    for (var i = 0; i < this.wordList.length; i++) {
-      this.wordList[i].isChecked = this.isSelected;
+  checkUncheckAll(component) {
+    for (var i = 0; i < component.wordList.length; i++) {
+      component.wordList[i].isChecked = component.isSelected;
     }
-    this.getCheckedItemList();
+    this.getCheckedItemList(component);
   }
    
-  isAllSelected() {
-    this.isSelected = this.wordList.every(function(item:any) {
+  isAllSelected(component) {
+    component.isSelected = component.wordList.every(function(item:any) {
         return item.isChecked == true;
       })
-    this.getCheckedItemList();
+    this.getCheckedItemList(component);
   }
   
-  getCheckedItemList(){
-    this.checkedUserList = [];
-    for (var i = 0; i < this.wordList.length; i++) {
-      if(this.wordList[i].isChecked)
-      this.checkedUserList.push(this.wordList[i]);
+  getCheckedItemList(component){
+    component.checkedUserList = [];
+    for (var i = 0; i < component.wordList.length; i++) {
+      if(component.wordList[i].isChecked)
+      component.checkedUserList.push(component.wordList[i]);
     }
-    if(this.checkedUserList.length>0){
-      this.isDisableBtn=false;
+    if(component.checkedUserList.length>0){
+      component.isDisableBtn=false;
     }else{
-      this.isDisableBtn=true;
+      component.isDisableBtn=true;
     }
   }
 
-  deleteWord(id:any){
+  deleteWord(id:any,component){
     this.clientService.deleteWord(id).subscribe((response: any)=>{
-      this.reset();
+      this.reset(component);
       this.appComponent.alertWithSuccess(response);
     },err=>{
       this.appComponent.erroAlert('Delete error: '+err);
@@ -80,10 +70,10 @@ export class ListWordComponent implements OnInit {
     )
   }
 
-  updateWordList(){
-    for(var i=0;i<this.checkedUserList.length;i++){
-      this.deleteWord(this.checkedUserList[i]._id);
-      console.log(this.checkedUserList[i]._id);
+  updateWordList(component){
+    for(var i=0;i<component.checkedUserList.length;i++){
+      this.deleteWord(component.checkedUserList[i]._id,component);
+      console.log(component.checkedUserList[i]._id);
     }
   }
 }

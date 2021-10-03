@@ -44,24 +44,17 @@ export class EditWordComponent implements OnInit {
       })
     })
   }
+
   updateWord(){
     const profileData = new FormData();
-    // profileData.append("_id", this.id);
-    // profileData.append("tu_en", this.form.value.tu_en);
-    // profileData.append("nghia_en", this.form.value.nghia_en);
-    // profileData.append("tu_vi", this.form.value.tu_vi);
-    // profileData.append("nghia_vi", this.form.value.nghia_vi);
-    // profileData.append("tu_lienquan", this.form.value.tu_lienquan);
-    // profileData.append("anh", this.form.value.anh);
     if(this.form.value.anh!=null){
       profileData.append("_id", this.id);
       profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-    this.clientService.updateImg(this.id,profileData).subscribe((response: any)=>{
-       console.log(response);
-      this.appComponent.alertWithSuccess(response);
-    })
+      this.clientService.updateImg(this.id,profileData).subscribe((response: any)=>{
+        console.log(response);
+        this.appComponent.alertWithSuccess(response);
+      })
     }
-     
     var words={
       _id:this.id,
       tu_en: this.form.value.tu_en,
@@ -70,13 +63,10 @@ export class EditWordComponent implements OnInit {
       nghia_vi:this.form.value.nghia_vi,
       tu_lienquan:this.form.value.tu_lienquan,
     };
-    // this.imgData=null;
-    // this.form.reset();
     console.log(words);
     console.log(this.id);
     this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
       console.log(response);
-      // this.reset();
       this.appComponent.alertWithSuccess(response);
     },
     err=>{

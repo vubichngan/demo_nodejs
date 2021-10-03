@@ -21,6 +21,11 @@ import { ManageComponent } from './component/manage/manage.component';
 import { NewWordComponent } from './component/user/new-word/new-word.component';
 import { EditWordComponent } from './component/user/edit-word/edit-word.component';
 import { ListWordComponent } from './component/user/list-word/list-word.component';
+import { NotApprovedYetComponent } from './component/user/list-word/not-approved-yet/not-approved-yet.component';
+import { ApprovedComponent } from './component/user/list-word/approved/approved.component';
+import { UnapprovedComponent } from './component/user/list-word/unapproved/unapproved.component';
+import { MApprovedComponent} from './component/manage/m-approved/m-approved.component';
+import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,12 @@ import { ListWordComponent } from './component/user/list-word/list-word.componen
     ManageComponent,
     NewWordComponent,
     EditWordComponent,
-    ListWordComponent
+    ListWordComponent,
+    NotApprovedYetComponent,
+    ApprovedComponent,
+    UnapprovedComponent,
+    MApprovedComponent,
+    NeetToBeApprovedComponent
   ],
   imports: [
     BrowserModule,

@@ -3,5 +3,5 @@ bang thong canh bao xoa /
 upload anh /
 sua cac trang khac loc /
 trang sua/
-tao navbar
+tao navbar/
 loc listword

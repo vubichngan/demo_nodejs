@@ -24,12 +24,11 @@ export class LoginComponent implements OnInit {
       res=>{
         this.clientService.setToken(res['token']);
         if(this.clientService.getUserPayload().permission==="2"){
-          this.router.navigateByUrl('/user/list-word');
+          this.router.navigate(['/user/list-word/notApprovedYet']);
         }else if(this.clientService.getUserPayload().permission==="1"){
-          this.router.navigateByUrl('/manage');
+          this.router.navigate(['/manage/napproved']);
         }else
           this.router.navigateByUrl('/admin');
-        
       },
       err=>{
         this.serverErrorMessage=err.error.message;

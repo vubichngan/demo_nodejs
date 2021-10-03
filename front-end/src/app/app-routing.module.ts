@@ -12,6 +12,12 @@ import { UserComponent } from './component/user/user.component';
 import { NewWordComponent } from './component/user/new-word/new-word.component';
 import { EditWordComponent } from './component/user/edit-word/edit-word.component';
 import { ListWordComponent} from './component/user/list-word/list-word.component';
+import { NotApprovedYetComponent } from './component/user/list-word/not-approved-yet/not-approved-yet.component';
+import { ApprovedComponent } from './component/user/list-word/approved/approved.component';
+import { UnapprovedComponent } from './component/user/list-word/unapproved/unapproved.component';
+import { MApprovedComponent} from './component/manage/m-approved/m-approved.component';
+import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
+
 
 const routes: Routes = [
   {path:'', redirectTo: '/search', pathMatch: 'full'},
@@ -19,13 +25,19 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
   {path:'search', component: SearchComponent},
-  //{path:'search/:type/:word', component: SearchComponent},
   {path:'admin', component: AdminComponent},
-  {path:'manage', component: ManageComponent},
+  {path:'manage', component: ManageComponent, canActivate: [AuthGuard], children:[
+    {path:'mapproved', component: MApprovedComponent},
+    {path:'napproved', component: NeetToBeApprovedComponent},
+  ]},
   {path:'user', component: UserComponent, canActivate: [AuthGuard], children:[
     {path:'new-word', component: NewWordComponent},
     {path:'edit-word', component: EditWordComponent},
-    {path:'list-word', component: ListWordComponent},
+    {path:'list-word', component: ListWordComponent, canActivate: [AuthGuard], children:[
+      {path:'notApprovedYet', component: NotApprovedYetComponent},
+      {path:'approved', component: ApprovedComponent},
+      {path:'unapproved', component: UnapprovedComponent},
+    ]},
   ]},
 ];
 

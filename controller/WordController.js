@@ -44,7 +44,7 @@ class WordController{
 
     delete(req,res,next){
         Word.deleteOne({_id: req.params.id})
-        .then(()=>res.json("Delete successfull"))
+        .then(()=>res.json("Delete successfully"))
          .catch(next);
     }
 }
