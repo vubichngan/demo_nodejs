@@ -13,19 +13,17 @@ import { Router } from '@angular/router';
 export class ManageComponent implements OnInit {
 
   
-  userDetails;
-  userId;
+  userName;
   constructor(private clientService: ClientService, private appComponent: AppComponent, private router: Router) { }
 
   ngOnInit(): void {
     this.clientService.getUserProfile().subscribe(
       res=>{
-        this.userDetails=res['user'].user_name;
+        this.userName=res['user'].user_name;
       },
       err=>{
         console.log(err);
       });
-    this.userId= this.clientService.getUserPayload()._id;
   }
 
   onLogout(){

@@ -37,7 +37,7 @@ export class NewWordComponent implements OnInit {
     profileData.append("tu_vi", this.form.value.tu_vi);
     profileData.append("nghia_vi", this.form.value.nghia_vi);
     profileData.append("tu_lienquan", this.form.value.tu_lienquan);
-    profileData.append("id_user", this.userComponent.userId);
+    profileData.append("user_name", this.userComponent.userName);
     profileData.append("status", "Chưa duyệt");
     profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
     this.form.reset();

@@ -20,6 +20,7 @@
             <th scope="col">Nghĩa tiếng Việt</th>
             <th scope="col">Ảnh minh họa</th>
             <th scope="col">Các từ liên quan</th>
+            <th scope="col">Tác giả</th>
             <th scope="col" colspan="2" class="text-center">Hành động</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@
             <td>{{word.nghia_vi}}</td>
             <td><img src="{{word.anh}}" alt="anh"></td>
             <td>{{word.tu_lienquan}}</td>
+            <td>{{word.user_name}}</td>
             <td><button type="button" class="btn btn-primary" (click)="updateWordStatus(word._id,'Đã duyệt')">Duyệt</button></td>
             <td><button type="button" class="btn btn-danger" (click)="updateWordStatus(word._id,'Từ chối')">Từ chối</button></td>
           </tr>

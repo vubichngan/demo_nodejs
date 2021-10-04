@@ -17,6 +17,7 @@ import { ApprovedComponent } from './component/user/list-word/approved/approved.
 import { UnapprovedComponent } from './component/user/list-word/unapproved/unapproved.component';
 import { MApprovedComponent} from './component/manage/m-approved/m-approved.component';
 import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
+import { ListUserComponent } from './component/admin/list-user/list-user.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,11 @@ const routes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
   {path:'search', component: SearchComponent},
-  {path:'admin', component: AdminComponent},
+  {path:'admin', component: AdminComponent, canActivate: [AuthGuard], children:[
+    {path:'list-user', component: ListUserComponent},
+    {path:'mapproved', component: MApprovedComponent},
+    {path:'napproved', component: NeetToBeApprovedComponent},
+  ]},
   {path:'manage', component: ManageComponent, canActivate: [AuthGuard], children:[
     {path:'mapproved', component: MApprovedComponent},
     {path:'napproved', component: NeetToBeApprovedComponent},

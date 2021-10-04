@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
         }else if(this.clientService.getUserPayload().permission==="1"){
           this.router.navigate(['/manage/napproved']);
         }else
-          this.router.navigateByUrl('/admin');
+          this.router.navigateByUrl('/admin/list-user');
       },
       err=>{
         this.serverErrorMessage=err.error.message;

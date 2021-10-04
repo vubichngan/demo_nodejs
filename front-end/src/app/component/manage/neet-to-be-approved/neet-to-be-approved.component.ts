@@ -22,6 +22,7 @@ export class NeetToBeApprovedComponent implements OnInit {
   }
 
   reset(){
+    
     this.clientService.getWord().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status=='Chưa duyệt');
       this.wordList.forEach(function(element){element.isChecked=false;})

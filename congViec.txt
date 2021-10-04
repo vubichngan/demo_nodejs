@@ -4,4 +4,10 @@ upload anh /
 sua cac trang khac loc /
 trang sua/
 tao navbar/
-loc listword
+loc listword/
+them ten user vao bang manage/
+tach manage them một trang cần duyệt
+thêm từ 0 bắt buộc ảnh
+search
+doi mat khau
+xoa anh

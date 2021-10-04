@@ -20,7 +20,7 @@ export class ListWordComponent implements OnInit {
 
   reset(component){
     this.clientService.getWord().subscribe((response: any)=>{
-      component.wordList= response.filter(s => s.id_user==this.userComponent.userId);
+      component.wordList= response.filter(s => s.user_name==this.userComponent.userName);
       component.wordList= response.filter(s => s.status===this.status);
       component.wordList.forEach(function(element){element.isChecked=false;})
       console.log(component.wordList);

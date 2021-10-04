@@ -1,6 +1,5 @@
 const cors = require('cors');
 const Word=require('../models/Word');
-
 class WordController{
     
     index(req,res,next){
@@ -36,7 +35,6 @@ class WordController{
     updateImg(req,res,next){
         const word=new Word(req.body);
         word.anh='http://localhost:3000/images/'+req.file.filename;
-        //res.json(word)
         Word.updateOne({_id: req.params.id}, word)
         .then(()=>res.json(word))
         .catch(next);

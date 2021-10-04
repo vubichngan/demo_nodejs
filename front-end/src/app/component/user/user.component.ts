@@ -16,8 +16,7 @@ export class UserComponent implements OnInit {
   
   // form: FormGroup;
   wordId;
-  userDetails;
-  userId;
+  userName;
   imgData:String;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
   constructor(private clientService: ClientService,private router: Router, private appComponent: AppComponent) {
@@ -26,12 +25,11 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.clientService.getUserProfile().subscribe(
       res=>{
-        this.userDetails=res['user'].user_name;
+        this.userName=res['user'].user_name;
       },
       err=>{
         console.log(err);
       });
-    this.userId= this.clientService.getUserPayload()._id;
     
   }
   newForm(form){
