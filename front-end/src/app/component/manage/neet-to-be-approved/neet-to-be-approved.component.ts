@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
-
+import { ManageComponent } from '../manage.component';
 
 @Component({
   selector: 'app-neet-to-be-approved',
@@ -9,24 +9,25 @@ import { Word } from 'src/app/model/word';
   styleUrls: ['./neet-to-be-approved.component.css']
 })
 export class NeetToBeApprovedComponent implements OnInit {
-
+  
+  search='';
   wordList:Word[];
+  wordListFilter:Word[];
   status: String;
   checkedUserList:any;
   isSelected:boolean;
   isDisableBtn:boolean;
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService,private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
     this.reset();
   }
 
   reset(){
-    
     this.clientService.getWord().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status=='Chưa duyệt');
       this.wordList.forEach(function(element){element.isChecked=false;})
-      console.log(this.wordList);
+      this.wordListFilter=this.wordList;
       this.status="Đã duyệt";
       this.isSelected=false;
       this.isDisableBtn=true;
@@ -37,10 +38,7 @@ export class NeetToBeApprovedComponent implements OnInit {
       var word=new Word();
       word._id=id;
       word.status=status;
-      console.log(word);
-      console.log(id);
       this.clientService.updateWord(id,word).subscribe((response: any)=>{
-        console.log(response);
         this.reset();
       })
       
@@ -49,7 +47,6 @@ export class NeetToBeApprovedComponent implements OnInit {
     updateWordList(){
       for(var i=0;i<this.checkedUserList.length;i++){
         this.updateWordStatus(this.checkedUserList[i]._id,this.status);
-        console.log(this.checkedUserList[i]._id);
       }
     }
   
@@ -80,4 +77,12 @@ export class NeetToBeApprovedComponent implements OnInit {
       }
     }
 
+    onKey(event: any){
+      this.search = event.target.value;
+      if(this.search===""){
+        this.wordListFilter=this.wordList;
+      }else{
+        this.wordListFilter= this.wordList.filter(s => s.tu_en.toLowerCase().indexOf(this.search.toLowerCase())!==-1);
+      }
+    }
 }

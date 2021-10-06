@@ -1,9 +1,13 @@
 table{
-    width: 80%;
+    width: 90%;
     height: auto;
     margin-top: 20px;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 .action{
-    margin-left: 10%;
+    margin-left: 5%;
+}
+
+select{
+    border: 1px solid black;
 }

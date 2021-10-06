@@ -1,28 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Word } from 'src/app/model/word';
 import { ClientService } from 'src/app/service/client.service';
+import { Word } from 'src/app/model/word';
+import { AdminComponent } from '../admin.component';
 
 
 @Component({
-  selector: 'app-m-approved',
-  templateUrl: './m-approved.component.html',
-  styleUrls: ['./m-approved.component.css']
+  selector: 'app-a-neet-approved',
+  templateUrl: './a-neet-approved.component.html',
+  styleUrls: ['./a-neet-approved.component.css']
 })
-export class MApprovedComponent implements OnInit {
+export class ANeetApprovedComponent implements OnInit {
 
+  search='';
   wordList:Word[];
   wordListFilter:Word[];
-  search='';
-  constructor(private clientService: ClientService) { }
+  constructor(private clientService: ClientService, private adminComponent:AdminComponent) { }
 
   ngOnInit(): void {
     this.clientService.getWord().subscribe((response: any)=>{
-      this.wordList= response.filter(s => s.status==="Đã duyệt");
+      this.wordList= response.filter(s => s.status=='Chưa duyệt');
       this.wordListFilter=this.wordList;
     })
   }
+
   onKey(event: any){
-    this.search = event.target.value;
+    this.adminComponent.onKey(event,this);
     if(this.search===""){
       this.wordListFilter=this.wordList;
     }else{

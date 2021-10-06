@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
 
- 
+  idUser;
   userName;
   constructor(private clientService: ClientService,private appComponent:AppComponent,private router: Router) { 
   }
@@ -25,12 +25,18 @@ export class AdminComponent implements OnInit {
       err=>{
         console.log(err);
       });
+      this.idUser=this.clientService.getUserPayload()._id
   }
 
   onLogout(){
     this.appComponent.onLogout(this);
   }
 
+  onKey(event, component){
+    component.search = event.target.value;
+  }
   
-  
+  formCreateUser(){
+    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  }
 }

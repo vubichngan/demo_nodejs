@@ -14,10 +14,11 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class ListUserComponent implements OnInit {
 
-  
+  search='';
   userList:User[];
-  user_name:String;
-  password: String;
+  userListFilter:User[];
+  // user_name:String;
+  // password: String;
   checkedUserList:any;
   isSelected:boolean;
   status:String;
@@ -28,6 +29,16 @@ export class ListUserComponent implements OnInit {
   ngOnInit(): void {
     this.reset();
   }
+
+  onKey(event: any){
+    this.adminComponent.onKey(event,this);
+    if(this.search===""){
+      this.userListFilter=this.userList;
+    }else{
+      this.userListFilter= this.userList.filter(s => s.user_name.toLowerCase().indexOf(this.search.toLowerCase())!==-1);
+    }
+  }
+
 
   formCreateUser(){
     Swal.fire({
@@ -59,10 +70,9 @@ export class ListUserComponent implements OnInit {
       user.user_name=form.value.login;
       user.password= form.value.password;
       user.permission= "1";
-      user.status="Kích hoạt";
+      user.status="1";
     this.clientService.createUser(user).subscribe((response: any)=>{
       this.reset();
-      console.log(response);
       this.appComponent.alertWithSuccess("Successfully");
     },
     err=>{
@@ -94,8 +104,13 @@ export class ListUserComponent implements OnInit {
           }else if(element.permission==='1')
                   element.permission="Quản lý";
           else element.permission="Người dùng thường";
+
+          if(element.status==='1'){
+            element.status="Kích hoạt";
+          }else element.status="Khóa";
         })
-        this.status="Kich hoat";
+        this.userListFilter=this.userList;
+        this.status="1";
         this.isSelected=false;
         this.isDisableBtn=true;
       })
@@ -104,11 +119,11 @@ export class ListUserComponent implements OnInit {
   
     updateUser(id: any,status: String){
       var user=new User();
+      user._id=id;
       user.status=status;
       this.clientService.updateUser(id,user).subscribe((response: any)=>{
-        console.log(response);
+        this.reset();
       })
-      this.reset();
     }
   
     updateUserList(){

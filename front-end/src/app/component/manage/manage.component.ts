@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 })
 export class ManageComponent implements OnInit {
 
-  
   userName;
+  idUser;
   constructor(private clientService: ClientService, private appComponent: AppComponent, private router: Router) { }
 
   ngOnInit(): void {
@@ -24,12 +24,14 @@ export class ManageComponent implements OnInit {
       err=>{
         console.log(err);
       });
+      this.idUser=this.clientService.getUserPayload()._id
   }
 
   onLogout(){
     this.appComponent.onLogout(this);
   }
-
-
-
+   
+  formCreateUser(){
+    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  }
 }

@@ -24,6 +24,10 @@ export class WebRequestService {
     return this.http.post(`${this.ROOT_URL}/${uri}`, payload,t);
   }
 
+  putU(uri: String, payload: Object, t:any){
+    return this.http.put(`${this.ROOT_URL}/${uri}`, payload,t);
+  }
+
   put(uri: String, payload: Object){
     return this.http.put(`${this.ROOT_URL}/${uri}`, payload);
   }

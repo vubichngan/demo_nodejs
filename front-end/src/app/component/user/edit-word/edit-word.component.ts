@@ -51,7 +51,6 @@ export class EditWordComponent implements OnInit {
       profileData.append("_id", this.id);
       profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
       this.clientService.updateImg(this.id,profileData).subscribe((response: any)=>{
-        console.log(response);
         this.appComponent.alertWithSuccess(response);
       })
     }
@@ -66,7 +65,6 @@ export class EditWordComponent implements OnInit {
     console.log(words);
     console.log(this.id);
     this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
-      console.log(response);
       this.appComponent.alertWithSuccess(response);
     },
     err=>{

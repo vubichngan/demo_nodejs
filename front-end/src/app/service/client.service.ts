@@ -40,8 +40,12 @@ export class ClientService {
   }
 
   updateUser(_id:String, user: any){
-    return this.WebReqService.put('user/update/'+_id,user);
+    return this.WebReqService.putU('user/update/'+_id,user,this.noAuthHeader);
   }
+
+  // changePassword(_id:String, user: any){
+  //   return this.WebReqService.put('user/update/password'+_id,user,this.noAuthHeader);
+  // }
 
   getUser(){
     return this.WebReqService.get('user');

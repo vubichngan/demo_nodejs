@@ -1,4 +1,5 @@
 <h1 class="text-center mb-5">Danh sách từ đã duyệt</h1>
+<input id="search" class="form-control" type="search" placeholder="Search từ tiếng Anh" aria-label="Search" (keyup)="onKey($event)">
     <table class="table">
       <thead class="thead-light">
         <tr>
@@ -9,12 +10,10 @@
           <th scope="col">Nghĩa tiếng Việt</th>
           <th scope="col">Ảnh minh họa</th>
           <th scope="col">Các từ liên quan</th>
-          <!-- <th scope="col">Trạng thái</th> -->
-          <!-- <th scope="col" colspan="2" class="text-center">Hành động</th> -->
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let word of wordList ; index as i">
+        <tr *ngFor="let word of wordListFilter; index as i">
           <th scope="row">{{i+1}}</th> 
           <td>{{word.tu_en}}</td>
           <td>{{word.nghia_en}}</td>
@@ -22,7 +21,6 @@
           <td>{{word.nghia_vi}}</td> 
           <td><img src="{{word.anh}}" alt="anh"></td>
           <td>{{word.tu_lienquan}}</td>
-          <!-- <td>{{word.status}}</td> -->
           <!-- <td><a routerLink='/user/edit-word' type="button" class="btn btn-primary" (click)="getWordId(word._id)">Edit</a></td>
           <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Delete</button></td> -->
         </tr>

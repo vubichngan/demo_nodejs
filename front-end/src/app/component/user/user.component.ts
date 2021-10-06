@@ -3,7 +3,7 @@ import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
-import { FormGroup,FormControl } from '@angular/forms';
+import { FormGroup,FormControl ,Validators} from '@angular/forms';
 
 
 @Component({
@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   // form: FormGroup;
   wordId;
   userName;
+  idUser;
   imgData:String;
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = []; 
   constructor(private clientService: ClientService,private router: Router, private appComponent: AppComponent) {
@@ -30,15 +31,15 @@ export class UserComponent implements OnInit {
       err=>{
         console.log(err);
       });
-    
+      this.idUser=this.clientService.getUserPayload()._id
   }
   newForm(form){
     form.form= new FormGroup({
-      tu_en: new FormControl(null),
-      nghia_en: new FormControl(null),
-      tu_vi: new FormControl(null),
-      nghia_vi: new FormControl(null),
-      tu_lienquan: new FormControl(null),
+      tu_en: new FormControl(null,Validators.required),
+      nghia_en: new FormControl(null,Validators.required),
+      tu_vi: new FormControl(null,Validators.required),
+      nghia_vi: new FormControl(null,Validators.required),
+      tu_lienquan: new FormControl(null,Validators.required),
       anh: new FormControl(null),
       status: new FormControl(null),
     })
@@ -60,7 +61,9 @@ export class UserComponent implements OnInit {
     }
   }
 
-  
+  formCreateUser(){
+    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  }
 
 //   uploadFile(file) {  
 //     const formData = new FormData();  

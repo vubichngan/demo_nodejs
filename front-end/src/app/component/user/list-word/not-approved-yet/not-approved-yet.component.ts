@@ -10,6 +10,8 @@ import { Word } from 'src/app/model/word';
 })
 export class NotApprovedYetComponent implements OnInit {
 
+  search='';
+  wordListFilter:Word[];
   wordList:Word[];
   checkedUserList:any;
   isDisableBtn:boolean;
@@ -39,6 +41,10 @@ export class NotApprovedYetComponent implements OnInit {
 
   deleteWord(id){
     this.listWordComponent.deleteWord(id, this);
+  }
+
+  onKey(event: any){
+    this.listWordComponent.onKey(event,this);
   }
 
   updateWordList(){

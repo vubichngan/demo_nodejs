@@ -27,6 +27,7 @@ import { UnapprovedComponent } from './component/user/list-word/unapproved/unapp
 import { MApprovedComponent} from './component/manage/m-approved/m-approved.component';
 import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
 import { ListUserComponent } from './component/admin/list-user/list-user.component';
+import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ListUserComponent } from './component/admin/list-user/list-user.compone
     UnapprovedComponent,
     MApprovedComponent,
     NeetToBeApprovedComponent,
-    ListUserComponent
+    ListUserComponent,
+    ANeetApprovedComponent
   ],
   imports: [
     BrowserModule,

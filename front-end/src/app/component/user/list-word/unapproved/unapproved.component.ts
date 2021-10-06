@@ -9,7 +9,9 @@ import { Word } from 'src/app/model/word';
 })
 export class UnapprovedComponent implements OnInit {
 
+  search='';
   wordList:Word[];
+  wordListFilter:Word[];
   checkedUserList:any;
   isDisableBtn:boolean;
   isSelected:boolean;
@@ -42,5 +44,9 @@ export class UnapprovedComponent implements OnInit {
 
   updateWordList(){
     this.listWordComponent.updateWordList(this);
+  }
+
+  onKey(event: any){
+    this.listWordComponent.onKey(event,this);
   }
 }

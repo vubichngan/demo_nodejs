@@ -14,5 +14,12 @@ img{
 }
 
 button{
-    width: 50%;
+    width: 25%;
+}
+
+.validation-message{
+    color: red;
+    text-align: center;
+    width: 100%;
+    margin: 0;
 }

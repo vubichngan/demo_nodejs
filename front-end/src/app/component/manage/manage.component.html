@@ -1,11 +1,6 @@
 <nav >
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 navigation-bar">
-    <nav class="navbar navbar-dark bg-dark">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </nav>
-    <input class="form-control" type="text" disabled placeholder="Search" aria-label="Search" id="search">
+    <p id="search"></p>
     <ul class="navbar-nav mx-3">
       <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,7 +12,7 @@
       </li>
     </ul>
   </nav>
-  <div >
+  <div>
       <div class="sidenav" >
         <div class="user">
           <p class="mb-3 ">Welcome </p>
@@ -57,7 +52,7 @@
                 Tài khoản
               </button>
               <div class="dropdown-menu" aria-labelledby="MenuButton">
-                <a class="dropdown-item" href="#">Đổi mật khẩu</a>
+                <a class="dropdown-item" (click)="formCreateUser()">Đổi mật khẩu</a>
               </div>
             </div>
         </div>

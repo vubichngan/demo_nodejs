@@ -35,15 +35,12 @@ body {
 }
 
 .navigation-bar {
-    max-width: 100%;
+    max-width: 86%;
     line-height: 1.42857143;
     color: #1d2129;
     font-size: 17px;
-    align-items: center;
-    display: flex;
-    left: 0;
-    padding-left: 40px;
     position: sticky;
+    left: 200px;
     top: 0;
     z-index: 3;
     justify-content: space-between;
@@ -112,7 +109,7 @@ body {
 }
 
 .sidenav {
-    top: 50px;
+    top:0px;
     height: 100%;
     width: 200px;
     position: fixed;

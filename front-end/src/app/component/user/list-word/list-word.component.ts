@@ -23,7 +23,7 @@ export class ListWordComponent implements OnInit {
       component.wordList= response.filter(s => s.user_name==this.userComponent.userName);
       component.wordList= response.filter(s => s.status===this.status);
       component.wordList.forEach(function(element){element.isChecked=false;})
-      console.log(component.wordList);
+      component.wordListFilter=component.wordList;
       component.isDisableBtn=true;
       component.isSelected=false;
     })
@@ -73,7 +73,15 @@ export class ListWordComponent implements OnInit {
   updateWordList(component){
     for(var i=0;i<component.checkedUserList.length;i++){
       this.deleteWord(component.checkedUserList[i]._id,component);
-      console.log(component.checkedUserList[i]._id);
+    }
+  }
+
+  onKey(event, component){
+    component.search = event.target.value;
+    if(component.search===""){
+      component.wordListFilter=component.wordList;
+    }else{
+      component.wordListFilter= component.wordList.filter(s => s.tu_en.toLowerCase().indexOf(component.search.toLowerCase())!==-1);
     }
   }
 }

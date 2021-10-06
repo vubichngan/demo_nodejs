@@ -6,8 +6,13 @@ trang sua/
 tao navbar/
 loc listword/
 them ten user vao bang manage/
-tach manage them một trang cần duyệt
-thêm từ 0 bắt buộc ảnh
-search
-doi mat khau
+tach admin them một trang cần duyệt/
+search/
+chinh controller success and error/
+doi mat khau/
+cac rang buoc 0 dc de trong khi them tu, sua /
+thêm từ 0 bắt buộc ảnh/
+kích hoat, 0 kich hoat tai khoan /
+
+chinh model word
 xoa anh

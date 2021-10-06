@@ -17,7 +17,7 @@ const User = new Schema({
     minlength: [4, 'Password must be atleast 4 character long']
   },
   permission: String,
-  status:String,
+  status:String, //kich hoat la 1; khoa la 0
   saltSecret:String,
 });
 
@@ -37,7 +37,7 @@ User.methods.verifyPassword=function(password){
 };
 
 User.methods.generateJwt=function(){
-  return jwt.sign({_id:this._id,permission: this.permission},
+  return jwt.sign({_id:this._id,permission: this.permission,status: this.status},
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXP

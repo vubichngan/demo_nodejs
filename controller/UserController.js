@@ -1,6 +1,9 @@
 const User=require('../models/User');
 const passport=require('passport');
 const _ =require('lodash');
+const { use } = require('passport');
+const bcrypt= require('bcrypt');
+
 
 class UserController{
     
@@ -36,9 +39,25 @@ class UserController{
     }
 
     update(req,res,next){
-        User.updateOne({_id: req.params.id}, req.body)
-        .then(()=>res.json("update successfull !!!"))
-        .catch(next);
+        const user=new User(req.body);
+        console.log(user);
+        if(user.password){
+            bcrypt.genSalt(10,(err,salt)=>{
+                bcrypt.hash(user.password,salt,(err,hash)=>{
+                  user.password=hash;
+                  user.saltSecret=salt;
+                  User.updateOne({_id: req.params.id}, user)
+                  .then(()=>res.json(user))
+                  .catch(next);
+                });
+              });
+        }else {
+            User.updateOne({_id: req.params.id}, user)
+                  .then(()=>res.json(user))
+                  .catch(next);
+        }
+            
+        
     }
 
     authenticate(req, res, next){

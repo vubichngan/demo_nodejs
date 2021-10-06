@@ -12,23 +12,17 @@ class WordController{
         });
     }
 
-   async create(req,res,next){
+   create(req,res,next){
         const word=new Word(req.body);
-        word.anh='http://localhost:3000/images/'+req.file.filename;
-        res.json(word);
-        const createWord=await word.save();
-        res.status(201).json({
-            word:{
-                ...createWord._doc
-            }
-        })
+        word.save()
+        .then(()=>res.json("Create Successfully"))
+        .catch(next);
     }
 
     update(req,res,next){
         const word=new Word(req.body);
-        //res.json(word);
         Word.updateOne({_id: req.params.id}, word)
-        .then(()=>res.json(word))
+        .then(()=>res.json(" Update successfully"))
         .catch(next);
     }
 
@@ -36,7 +30,7 @@ class WordController{
         const word=new Word(req.body);
         word.anh='http://localhost:3000/images/'+req.file.filename;
         Word.updateOne({_id: req.params.id}, word)
-        .then(()=>res.json(word))
+        .then(()=>res.json("Update successfully"))
         .catch(next);
     }
 

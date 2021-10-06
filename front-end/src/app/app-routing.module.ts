@@ -18,6 +18,8 @@ import { UnapprovedComponent } from './component/user/list-word/unapproved/unapp
 import { MApprovedComponent} from './component/manage/m-approved/m-approved.component';
 import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
 import { ListUserComponent } from './component/admin/list-user/list-user.component';
+import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
+
 
 
 const routes: Routes = [
@@ -30,6 +32,8 @@ const routes: Routes = [
     {path:'list-user', component: ListUserComponent},
     {path:'mapproved', component: MApprovedComponent},
     {path:'napproved', component: NeetToBeApprovedComponent},
+
+    {path:'anapproved', component: ANeetApprovedComponent},
   ]},
   {path:'manage', component: ManageComponent, canActivate: [AuthGuard], children:[
     {path:'mapproved', component: MApprovedComponent},

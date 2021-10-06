@@ -11,5 +11,4 @@ route.put('/updateImg/:id',storage,wordController.updateImg);
 route.delete('/delete/:id',wordController.delete);
 route.get('/',wordController.index);
 
-
 module.exports=route;

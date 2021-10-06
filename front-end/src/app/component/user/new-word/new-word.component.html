@@ -1,28 +1,48 @@
 <h1 class="text-center mb-3">Thêm từ</h1>
-<form [formGroup]="form" (submit)="createWordUs()">
+<form [formGroup]="form" #addForm="ngForm" (submit)="form.valid && createWordUs()">
   <div class="d-flex">
     <div class="col-6">
       <div class="form-group">
         <label for="word_en">Từ tiếng Anh</label>
-        <input type="text" class="form-control" formControlName="tu_en" >
+        <input type="text" class="form-control" formControlName="tu_en" required 
+        [ngClass]="{'invalid-textbox': addForm.submitted}">
+        <div *ngIf="addForm.submitted && form.controls.tu_en?.errors?.required ">
+          <label class="validation-message"> This field is required.</label>
+        </div>
       </div>
       <div class="form-group">
         <label >Nghĩa tiếng Anh</label>
-        <textarea class="form-control" name="nghia_en" formControlName="nghia_en"></textarea>
+        <textarea class="form-control" name="nghia_en" formControlName="nghia_en" required 
+        [ngClass]="{'invalid-textbox': addForm.submitted}"></textarea>
+        <div *ngIf="addForm.submitted && form.controls.nghia_en?.errors?.required">
+          <label class="validation-message"> This field is required.</label>
+        </div>
       </div>
       <div class="form-group">
           <label >Từ tiếng Việt</label>
-          <input type="text" class="form-control" name="tu_vi" formControlName="tu_vi">
+          <input type="text" class="form-control" name="tu_vi" formControlName="tu_vi" required
+          [ngClass]="{'invalid-textbox': addForm.submitted}">
+          <div *ngIf=" addForm.submitted && form.controls.tu_vi?.errors?.required">
+            <label class="validation-message"> This field is required.</label>
+          </div>
       </div>
       <div class="form-group">
           <label >Nghĩa tiếng Việt</label>
-          <textarea class="form-control" rows="3" name="nghia_vi" formControlName="nghia_vi"></textarea>
+          <textarea class="form-control" rows="3" name="nghia_vi" formControlName="nghia_vi" required
+          [ngClass]="{'invalid-textbox': addForm.submitted}"></textarea>
+          <div *ngIf="addForm.submitted && form.controls.nghia_vi?.errors?.required">
+            <label class="validation-message"> This field is required.</label>
+          </div>
       </div>
     </div>
     <div class="col-6">
       <div class="form-group">
         <label >Các từ liên quan</label>
-        <textarea class="form-control"  rows="3" name="tu_lienquan" formControlName="tu_lienquan"></textarea>
+        <textarea class="form-control"  rows="3" name="tu_lienquan" formControlName="tu_lienquan" required 
+        [ngClass]="{'invalid-textbox': addForm.submitted}"></textarea>
+        <div *ngIf="addForm.submitted && form.controls.tu_lienquan?.errors?.required">
+          <label class="validation-message"> This field is required.</label>
+        </div>
       </div>
       <div class="form-group d-flex">
           <label class="col-4">Ảnh minh họa: </label>
@@ -34,6 +54,7 @@
     </div>
   </div>
   <div class="text-center">
-      <button type="submit" class="btn btn-primary my-3" >Save</button>
+    <button type="reset" class="btn btn-primary my-3 mx-3" >Reset</button>
+    <button type="submit" class="btn btn-primary my-3 mx-3" >Save</button>
   </div>
 </form>
