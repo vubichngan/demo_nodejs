@@ -31,7 +31,7 @@ export class ManageComponent implements OnInit {
     this.appComponent.onLogout(this);
   }
    
-  formCreateUser(){
-    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  formChangePassword(){
+    this.appComponent.formChangePassword(this,this.idUser,this.userName);
   }
 }

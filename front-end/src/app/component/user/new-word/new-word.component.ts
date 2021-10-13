@@ -3,9 +3,8 @@ import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
 import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
-import { UploadService } from  '../../../service/upload.service';
 import{HttpClient} from '@angular/common/http';
-import { FormGroup, FormControl} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,Validators,FormArray} from '@angular/forms';
 
 
 
@@ -19,11 +18,10 @@ export class NewWordComponent implements OnInit {
   form:FormGroup;
   imgData: string;
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent,
-    private fileUploadService: UploadService,private http:HttpClient) { }
+    private http:HttpClient,private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.userComponent.newForm(this);
-    this.imgData="/assets/image/image.png"
+    this.reset();
   }
   
   onFileSelect(event: Event){
@@ -31,57 +29,47 @@ export class NewWordComponent implements OnInit {
   }
 
   reset(){
-    this.form= new FormGroup({
-      tu_en: new FormControl(" "),
-      nghia_en: new FormControl(" "),
-      tu_vi: new FormControl(" "),
-      nghia_vi: new FormControl(" "),
-      tu_lienquan: new FormControl(" "),
-      anh: new FormControl(null),
-    })
+    this.userComponent.newForm(this);
     this.imgData="/assets/image/image.png"
   }
 
+  get tu_lienquan() : FormArray {
+    return this.form.get("tu_lienquan") as FormArray
+  }
+
+  removeTu_lienquan(i){
+    this.userComponent.removeTu_lienquan(i,this);
+  }
+
+  addTu_lienquan(event){
+    if(event.key=="Tab"){
+      this.userComponent.addTu_lienquan(this);
+    }else this.userComponent.addTu_lienquan(this);
+  }
+
+  
+
   createWordUs(){
-    var words={
-      tu_en: this.form.value.tu_en,
-      nghia_en:this.form.value.nghia_en,
-      tu_vi:this.form.value.tu_vi,
-      nghia_vi:this.form.value.nghia_vi,
-      tu_lienquan:this.form.value.tu_lienquan,
-      user_name: this.userComponent.userName,
-      status:"Chưa duyệt",
-    };
-    this.clientService.createWord(words).subscribe((response: any)=>{
-      const idWord=response._id;
-      if(this.form.value.anh!=null){
-        const profileData = new FormData();
-        profileData.append("_id", idWord);
-        profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-        this.clientService.updateImg(idWord,profileData).subscribe((response: any)=>{
-          this.appComponent.alertWithSuccess("Create Successfully");
+    var word =new Word();
+    word=this.form.value;
+    word.status="Chưa duyệt";
+    word.id_user=this.userComponent.idUser;
+    if(this.form.value.anh!=null){
+      const profileData = new FormData();
+      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+      this.clientService.createImg(profileData).subscribe((response: any)=>{
+        word._id=response._id;
+        this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
+          this.appComponent.alertWithSuccess(response);
+        },
+        err=>{
+          this.appComponent.erroAlert('Update error: '+err);
         })
-      }else {
-        this.appComponent.alertWithSuccess(response);
+      })
+    }else {
+        this.clientService.createWord(word).subscribe((response: any)=>{
+          this.appComponent.alertWithSuccess(response);
+          console.log(response);})
       }
-      this.reset();
-    },
-    err=>{
-      this.appComponent.erroAlert('Update error: '+err);
-    })
-    
-   
-    // profileData.append("tu_en", this.form.value.tu_en);
-    // profileData.append("nghia_en", this.form.value.nghia_en);
-    // profileData.append("tu_vi", this.form.value.tu_vi);
-    // profileData.append("nghia_vi", this.form.value.nghia_vi);
-    // profileData.append("tu_lienquan", this.form.value.tu_lienquan);
-    // profileData.append("user_name", this.userComponent.userName);
-    // profileData.append("status", "Chưa duyệt");
-    // profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-    
-    // this.clientService.createWord(profileData).subscribe((response: any)=>{
-    //   this.appComponent.alertWithSuccess(response);
-    // })
   }
 }

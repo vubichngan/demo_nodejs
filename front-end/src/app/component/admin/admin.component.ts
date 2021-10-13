@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
     component.search = event.target.value;
   }
   
-  formCreateUser(){
-    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  formChangePassword(){
+    this.appComponent.formChangePassword(this,this.idUser,this.userName);
   }
 }

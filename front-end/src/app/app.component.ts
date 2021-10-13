@@ -37,7 +37,7 @@ export class AppComponent {
     nameComponent.router.navigate(['/login']);
   }
 
-  formCreateUser(component,idUser,userName){
+  formChangePassword(component,idUser,userName){
     Swal.fire({
       title: 'Đổi mật khẩu',
       html: `<input type="password" id="currentPassword" class="swal2-input" placeholder="Mật khẩu cũ">

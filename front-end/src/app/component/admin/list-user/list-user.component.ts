@@ -69,7 +69,7 @@ export class ListUserComponent implements OnInit {
     var user=new User();
       user.user_name=form.value.login;
       user.password= form.value.password;
-      user.permission= "1";
+      user.permission="1";
       user.status="1";
     this.clientService.createUser(user).subscribe((response: any)=>{
       this.reset();

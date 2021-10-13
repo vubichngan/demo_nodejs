@@ -15,7 +15,7 @@
           <th scope="col">STT</th>
           <th scope="col">Từ tiếng Anh</th>
           <th scope="col">Nghĩa tiếng Anh</th>
-          <th scope="col">Từ tiếng Việt</th>
+          <!-- <th scope="col">Từ tiếng Việt</th> -->
           <th scope="col">Nghĩa tiếng Việt</th>
           <th scope="col">Ảnh minh họa</th>
           <th scope="col">Các từ liên quan</th>
@@ -27,13 +27,12 @@
         <tr *ngFor="let word of wordListFilter; index as i">
           <td><input type="checkbox" name="itemCheckbox" [(ngModel)]="word.isChecked" (change)="isAllSelected()"></td>
           <th scope="row">{{i+1}}</th> 
-          <td>{{word.tu_en}}</td>
+          <td>{{word.tu.tu_en}}</td>
           <td>{{word.nghia_en}}</td>
-          <td>{{word.tu_vi}}</td>
+          <!-- <td>{{word.tu_vi}}</td> -->
           <td>{{word.nghia_vi}}</td> 
           <td><img src="{{word.anh}}" alt="anh"></td>
-          <td>{{word.tu_lienquan}}</td>
-          <!-- <td>{{word.status}}</td> -->
+          <td><p *ngFor="let tu_lq of word.tu_lienquan">{{tu_lq.id_tu}}</p></td>
           <td><a routerLink='/user/edit-word' type="button" class="btn btn-primary" (click)="getWordId(word._id)">Edit</a></td>
           <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Delete</button></td>
         </tr>

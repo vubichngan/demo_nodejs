@@ -15,6 +15,10 @@ export class ClientService {
     return this.WebReqService.post('word/create',word);
   }
 
+  createImg(word:any){
+    return this.WebReqService.post('word/createImg',word);
+  }
+
   updateWord(_id:String, word: any){
     return this.WebReqService.put('word/update/'+_id,word);
   }

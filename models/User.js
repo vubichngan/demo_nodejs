@@ -3,9 +3,11 @@ const bcrypt= require('bcrypt');
 const { Router } = require('express');
 const Schema = mongoose.Schema;
 const jwt =require('jsonwebtoken');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 
 const User = new Schema({
+  _id: Number,
   user_name:{
     type: String,
     require: 'User name can\'t be empty',
@@ -19,6 +21,10 @@ const User = new Schema({
   permission: String,
   status:String, //kich hoat la 1; khoa la 0
   saltSecret:String,
+},
+{
+  _id:false,
+  timestamps:true,
 });
 
 User.pre('save',function(next){
@@ -44,4 +50,5 @@ User.methods.generateJwt=function(){
     });
 }
 
+User.plugin(AutoIncrement); 
 module.exports=mongoose.model('user',User);

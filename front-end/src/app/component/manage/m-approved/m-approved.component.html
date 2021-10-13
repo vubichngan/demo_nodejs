@@ -6,7 +6,7 @@
           <th scope="col">STT</th>
           <th scope="col">Từ tiếng Anh</th>
           <th scope="col">Nghĩa tiếng Anh</th>
-          <th scope="col">Từ tiếng Việt</th>
+          <!-- <th scope="col">Từ tiếng Việt</th> -->
           <th scope="col">Nghĩa tiếng Việt</th>
           <th scope="col">Ảnh minh họa</th>
           <th scope="col">Các từ liên quan</th>
@@ -15,9 +15,9 @@
       <tbody>
         <tr *ngFor="let word of wordListFilter; index as i">
           <th scope="row">{{i+1}}</th> 
-          <td>{{word.tu_en}}</td>
+          <td>{{word.tu.tu_en}}</td>
           <td>{{word.nghia_en}}</td>
-          <td>{{word.tu_vi}}</td>
+          <!-- <td>{{word.tu_vi}}</td> -->
           <td>{{word.nghia_vi}}</td> 
           <td><img src="{{word.anh}}" alt="anh"></td>
           <td>{{word.tu_lienquan}}</td>

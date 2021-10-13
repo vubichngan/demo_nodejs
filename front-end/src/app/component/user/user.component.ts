@@ -34,16 +34,31 @@ export class UserComponent implements OnInit {
       this.idUser=this.clientService.getUserPayload()._id
   }
   newForm(form){
-    form.form= new FormGroup({
-      tu_en: new FormControl(null,Validators.required),
-      nghia_en: new FormControl(null,Validators.required),
-      tu_vi: new FormControl(null,Validators.required),
-      nghia_vi: new FormControl(null,Validators.required),
-      tu_lienquan: new FormControl(null,Validators.required),
-      anh: new FormControl(null),
-      status: new FormControl(null),
+    form.form= form.fb.group({
+      tu: form.fb.group({
+        tu_en:[" ",Validators.required],
+        tu_loai:[" ",Validators.required],
+        phien_am:[" ",Validators.required],
+      }),
+      nghia_en:[" ",Validators.required],
+      nghia_vi:[" ",Validators.required],
+      tu_lienquan: form.fb.array([]),
+      anh: form.fb.control(null),
+      status: [" ",Validators.required],
     })
   }
+
+  removeTu_lienquan(i:number,form) {
+    form.tu_lienquan.removeAt(i);
+  }  
+
+  addTu_lienquan(form){
+    const t=form.fb.group({
+      id_tu:[" ",Validators.required]
+    })
+    form.tu_lienquan.push(t);
+  }
+  
   onLogout(){
     this.appComponent.onLogout(this);
   }
@@ -61,8 +76,8 @@ export class UserComponent implements OnInit {
     }
   }
 
-  formCreateUser(){
-    this.appComponent.formCreateUser(this,this.idUser,this.userName);
+  formChangePassword(){
+    this.appComponent.formChangePassword(this,this.idUser,this.userName);
   }
 
 //   uploadFile(file) {  

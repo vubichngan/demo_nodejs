@@ -1,12 +1,20 @@
+import { DeclarationListEmitMode } from "@angular/compiler";
+
 export class Word {
     _id?:String;
-    tu_en:string;
+    tu:{
+        tu_en: String,
+        tu_loai:String,
+        phien_am:String
+      };
     nghia_en:String;
-    tu_vi:string;
     nghia_vi:String;
     anh:String;
-    tu_lienquan:String;
-    user_name:String;
+    tu_lienquan:[{
+        id_tu: Number,
+      }];
+    id_user:Number;
     status:String;
+    id_manager:Number;
     isChecked:boolean;
 }

@@ -16,3 +16,12 @@ kích hoat, 0 kich hoat tai khoan /
 
 chinh model word
 xoa anh
+phan trang 35:36/55:00
+search
+trang tim kiem
+trang admin tu choi
+trang manage da duyet theo id_manager
+add edit chuyen trang
+hien thi lai cac trang danh sach 
+them trang xem chi tiet
+cac rang buoc them sua

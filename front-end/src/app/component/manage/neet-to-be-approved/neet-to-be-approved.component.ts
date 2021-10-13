@@ -38,6 +38,7 @@ export class NeetToBeApprovedComponent implements OnInit {
       var word=new Word();
       word._id=id;
       word.status=status;
+      word.id_manager=this.manageComponent.idUser;
       this.clientService.updateWord(id,word).subscribe((response: any)=>{
         this.reset();
       })
@@ -82,7 +83,7 @@ export class NeetToBeApprovedComponent implements OnInit {
       if(this.search===""){
         this.wordListFilter=this.wordList;
       }else{
-        this.wordListFilter= this.wordList.filter(s => s.tu_en.toLowerCase().indexOf(this.search.toLowerCase())!==-1);
+        this.wordListFilter= this.wordList.filter(s => s.tu.tu_en.toLowerCase().indexOf(this.search.toLowerCase())!==-1);
       }
     }
 }

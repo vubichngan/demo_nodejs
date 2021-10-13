@@ -12,17 +12,47 @@ class WordController{
         });
     }
 
-   create(req,res,next){
+getWord(req,res){
+    Word.aggregate([
+        {$lookup:
+            {
+                from:'users',
+                localField: 'id_user',
+                foreignField: '_id',
+                as: 'user'
+            }
+
+        }
+    ],function (err,re) {
+            if (err) throw err;
+            res.json(re);
+            console.log(re);
+        })
+}
+
+   createImg(req,res,next){
         const word=new Word(req.body);
-        word.save()
-        .then(()=>res.json("Create Successfully"))
-        .catch(next);
+        word.anh='http://localhost:3000/images/'+req.file.filename;
+        word.save((err,doc)=>{
+            if(!err)
+                res.json(doc)
+            else{res.json(err)}
+        }); 
+    }
+
+    create(req,res,next){
+        const word=new Word(req.body);
+        word.save((err,doc)=>{
+            if(!err)
+                res.json(doc)
+            else{res.json(err)}
+        }); 
     }
 
     update(req,res,next){
         const word=new Word(req.body);
         Word.updateOne({_id: req.params.id}, word)
-        .then(()=>res.json(" Update successfully"))
+        .then(()=>res.json("Update successfully"))
         .catch(next);
     }
 
