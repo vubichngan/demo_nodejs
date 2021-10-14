@@ -19,7 +19,7 @@ const User = new Schema({
     minlength: [4, 'Password must be atleast 4 character long']
   },
   permission: String,
-  status:String, //kich hoat la 1; khoa la 0
+  status:String, //kich hoat la 1; khoa la 0; bị báo cáo là 2.
   saltSecret:String,
 },
 {

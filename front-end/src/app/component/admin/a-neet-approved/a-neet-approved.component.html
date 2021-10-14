@@ -16,12 +16,11 @@
         <tbody>
           <tr *ngFor="let word of wordListFilter; index as i">
             <th scope="row">{{i+1}}</th>
-            <td>{{word.tu.tu_en}}</td>
+            <td>{{word.tu.tu_en}} {{word.tu.tu_loai}} {{word.tu.phien_am}}</td>
             <td>{{word.nghia_en}}</td>
-            <!-- <td>{{word.tu_vi}}</td> -->
             <td>{{word.nghia_vi}}</td>
             <td><img src="{{word.anh}}" alt="anh"></td>
-            <td>{{word.tu_lienquan}}</td>
+            <td><p *ngFor="let tu_lq of word.tu_lienquan">{{tu_lq.id_tu}}</p></td>
             <td>{{word.id_user}}</td>
         </tr>
         </tbody>

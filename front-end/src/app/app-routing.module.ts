@@ -19,6 +19,8 @@ import { MApprovedComponent} from './component/manage/m-approved/m-approved.comp
 import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
 import { ListUserComponent } from './component/admin/list-user/list-user.component';
 import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
+import { AApprovedComponent } from './component/admin/a-approved/a-approved.component';
+import { UserResComponent } from './component/manage/user-res/user-res.component';
 
 
 
@@ -30,14 +32,13 @@ const routes: Routes = [
   {path:'search', component: SearchComponent},
   {path:'admin', component: AdminComponent, canActivate: [AuthGuard], children:[
     {path:'list-user', component: ListUserComponent},
-    {path:'mapproved', component: MApprovedComponent},
-    {path:'napproved', component: NeetToBeApprovedComponent},
-
+    {path:'aapproved', component: AApprovedComponent},
     {path:'anapproved', component: ANeetApprovedComponent},
   ]},
   {path:'manage', component: ManageComponent, canActivate: [AuthGuard], children:[
     {path:'mapproved', component: MApprovedComponent},
     {path:'napproved', component: NeetToBeApprovedComponent},
+    {path:'user', component: UserResComponent},
   ]},
   {path:'user', component: UserComponent, canActivate: [AuthGuard], children:[
     {path:'new-word', component: NewWordComponent},

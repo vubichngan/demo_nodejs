@@ -13,15 +13,16 @@ doi mat khau/
 cac rang buoc 0 dc de trong khi them tu, sua /
 thêm từ 0 bắt buộc ảnh/
 kích hoat, 0 kich hoat tai khoan /
+trang manage da duyet theo id_manager/
+add edit chuyen trang/
+hien thi lai cac trang danh sach /
+cac rang buoc them sua/
+chinh model word/
+search/
+manage cu bao user/
 
-chinh model word
 xoa anh
 phan trang 35:36/55:00
-search
 trang tim kiem
 trang admin tu choi
-trang manage da duyet theo id_manager
-add edit chuyen trang
-hien thi lai cac trang danh sach 
-them trang xem chi tiet
-cac rang buoc them sua
+danh sach word ket noi join

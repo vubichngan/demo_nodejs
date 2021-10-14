@@ -81,7 +81,7 @@ export class ListWordComponent implements OnInit {
     if(component.search===""){
       component.wordListFilter=component.wordList;
     }else{
-      component.wordListFilter= component.wordList.filter(s => s.tu_en.toLowerCase().indexOf(component.search.toLowerCase())!==-1);
+      component.wordListFilter= component.wordList.filter(s => s.tu.tu_en.toLowerCase().indexOf(component.search.toLowerCase())!==-1);
     }
   }
 }

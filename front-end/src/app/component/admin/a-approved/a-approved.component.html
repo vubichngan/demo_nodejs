@@ -9,6 +9,8 @@
           <th scope="col">Nghĩa tiếng Việt</th>
           <th scope="col">Ảnh minh họa</th>
           <th scope="col">Các từ liên quan</th>
+          <th scope="col">Tác giả</th>
+          <th scope="col">Người duyệt</th>
         </tr>
       </thead>
       <tbody>
@@ -19,8 +21,8 @@
           <td>{{word.nghia_vi}}</td> 
           <td><img src="{{word.anh}}" alt="anh"></td>
           <td><p *ngFor="let tu_lq of word.tu_lienquan">{{tu_lq.id_tu}}</p></td>
-          <!-- <td><a routerLink='/user/edit-word' type="button" class="btn btn-primary" (click)="getWordId(word._id)">Edit</a></td>
-          <td><button type="button" class="btn btn-danger" (click)="deleteWord(word._id)">Delete</button></td> -->
+          <td>{{word.id_user}}</td>
+          <td>{{word.id_manager}}</td>
         </tr>
       </tbody>
     </table>

@@ -34,10 +34,11 @@ export class NeetToBeApprovedComponent implements OnInit {
     })
   }
   
-    updateWordStatus(id: any,status: String){
+    updateWordStatus(id: any,i,status: String){
       var word=new Word();
       word._id=id;
       word.status=status;
+      word.tu_lienquan=this.wordListFilter[i].tu_lienquan;
       word.id_manager=this.manageComponent.idUser;
       this.clientService.updateWord(id,word).subscribe((response: any)=>{
         this.reset();
@@ -47,7 +48,7 @@ export class NeetToBeApprovedComponent implements OnInit {
   
     updateWordList(){
       for(var i=0;i<this.checkedUserList.length;i++){
-        this.updateWordStatus(this.checkedUserList[i]._id,this.status);
+        this.updateWordStatus(this.checkedUserList[i]._id,i,this.status);
       }
     }
   

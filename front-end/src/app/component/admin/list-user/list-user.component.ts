@@ -4,6 +4,7 @@ import { User } from 'src/app/model/user';
 import { AppComponent } from 'src/app/app.component';
 import { AdminComponent } from '../admin.component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 
 
@@ -35,7 +36,10 @@ export class ListUserComponent implements OnInit {
     if(this.search===""){
       this.userListFilter=this.userList;
     }else{
-      this.userListFilter= this.userList.filter(s => s.user_name.toLowerCase().indexOf(this.search.toLowerCase())!==-1);
+      this.userListFilter= this.userList.filter(s =>s.user_name.toLowerCase().indexOf(this.search.toLowerCase())!==-1||
+      s.permission.toLowerCase().indexOf(this.search.toLowerCase())!==-1||
+      s.status.toLowerCase().indexOf(this.search.toLowerCase())!==-1 
+      );
     }
   }
 
@@ -104,16 +108,21 @@ export class ListUserComponent implements OnInit {
           }else if(element.permission==='1')
                   element.permission="Quản lý";
           else element.permission="Người dùng thường";
-
+  
           if(element.status==='1'){
             element.status="Kích hoạt";
-          }else element.status="Khóa";
+          }else if(element.status==='0'){
+            element.status="Khóa";
+          }else element.status="Bị báo cáo"
         })
         this.userListFilter=this.userList;
         this.status="1";
         this.isSelected=false;
         this.isDisableBtn=true;
       })
+    
+
+      
     }
     
   

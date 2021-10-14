@@ -28,6 +28,8 @@ import { MApprovedComponent} from './component/manage/m-approved/m-approved.comp
 import { NeetToBeApprovedComponent} from './component/manage/neet-to-be-approved/neet-to-be-approved.component';
 import { ListUserComponent } from './component/admin/list-user/list-user.component';
 import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
+import { AApprovedComponent } from './component/admin/a-approved/a-approved.component';
+import { UserResComponent } from './component/manage/user-res/user-res.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet
     MApprovedComponent,
     NeetToBeApprovedComponent,
     ListUserComponent,
-    ANeetApprovedComponent
+    ANeetApprovedComponent,
+    AApprovedComponent,
+    UserResComponent
   ],
   imports: [
     BrowserModule,

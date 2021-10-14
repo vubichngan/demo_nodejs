@@ -4,7 +4,7 @@ import { Word } from 'src/app/model/word';
 import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
 import { FormGroup, FormControl,FormBuilder,Validators,FormArray} from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class EditWordComponent implements OnInit {
   imgData: string;
   id;
   img;
-  constructor(private fb: FormBuilder,private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
+  constructor(private router: Router,private fb: FormBuilder,private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
     this.userComponent.newForm(this);
@@ -33,7 +33,9 @@ export class EditWordComponent implements OnInit {
   get tu_lienquan() : FormArray {
     return this.form.get("tu_lienquan") as FormArray
   }
-
+  get tu(): any {
+    return this.form.get('tu');
+  }
   removeTu_lienquan(i){
     this.userComponent.removeTu_lienquan(i,this);
   }
@@ -48,7 +50,9 @@ export class EditWordComponent implements OnInit {
     var word= new Word();
     this.clientService.getWord().subscribe((response: any)=>{
       word= response.filter(s => s._id==this.id);
-      this.imgData=word[0].anh;
+      if(word[0].anh==null){
+        this.imgData="/assets/image/image.png";
+      }else this.imgData=word[0].anh;
       this.img=word[0].anh;
       
       this.form= this.fb.group({
@@ -57,10 +61,11 @@ export class EditWordComponent implements OnInit {
           tu_loai:[word[0].tu.tu_loai,Validators.required],
           phien_am:[word[0].tu.phien_am,Validators.required],
         }),
-        nghia_en:[word[0].nghia_en,Validators.required],
+        nghia_en:[word[0].nghia_en],
         nghia_vi:[word[0].nghia_vi,Validators.required],
         tu_lienquan: this.fb.array([]),
         anh: [word[0].anh],
+        status:[word[0].status],
       }) 
       for(var i=0; i<word[0].tu_lienquan.length;i++){
         const t=this.fb.group({
@@ -78,17 +83,20 @@ async  updateWord(){
       profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
      var t= await this.clientService.updateImg(this.id,profileData).toPromise();
      this.appComponent.alertWithSuccess(t);
-     console.log(t);
     }
     var words=new Word();
     words=this.form.value;
     words._id=this.id;
+    if(words.status=="Từ chối"){
+      words.status="Chưa duyệt";
+    }
+    console.log(words);
      this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
       this.appComponent.alertWithSuccess(response);
-      console.log(response);
     },
     err=>{
       this.appComponent.erroAlert('Update error: '+err);
     })
+    this.router.navigate(['/user/list-word/notApprovedYet']);
   }
 }

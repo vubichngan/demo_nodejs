@@ -36,15 +36,14 @@ export class UserComponent implements OnInit {
   newForm(form){
     form.form= form.fb.group({
       tu: form.fb.group({
-        tu_en:[" ",Validators.required],
-        tu_loai:[" ",Validators.required],
-        phien_am:[" ",Validators.required],
+        tu_en:["",Validators.required],
+        tu_loai:["(n)",Validators.required],
+        phien_am:["",Validators.required],
       }),
-      nghia_en:[" ",Validators.required],
-      nghia_vi:[" ",Validators.required],
+      nghia_en:[""],
+      nghia_vi:["",Validators.required],
       tu_lienquan: form.fb.array([]),
       anh: form.fb.control(null),
-      status: [" ",Validators.required],
     })
   }
 
@@ -54,7 +53,7 @@ export class UserComponent implements OnInit {
 
   addTu_lienquan(form){
     const t=form.fb.group({
-      id_tu:[" ",Validators.required]
+      id_tu:["",Validators.required]
     })
     form.tu_lienquan.push(t);
   }

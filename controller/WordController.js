@@ -37,7 +37,7 @@ getWord(req,res){
             if(!err)
                 res.json(doc)
             else{res.json(err)}
-        }); 
+        });
     }
 
     create(req,res,next){

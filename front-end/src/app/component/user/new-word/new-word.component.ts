@@ -30,11 +30,15 @@ export class NewWordComponent implements OnInit {
 
   reset(){
     this.userComponent.newForm(this);
-    this.imgData="/assets/image/image.png"
+    this.imgData="/assets/image/image.png";
   }
 
   get tu_lienquan() : FormArray {
     return this.form.get("tu_lienquan") as FormArray
+  }
+
+  get tu(): any {
+    return this.form.get('tu');
   }
 
   removeTu_lienquan(i){
@@ -49,7 +53,7 @@ export class NewWordComponent implements OnInit {
 
   
 
-  createWordUs(){
+  createWord(){
     var word =new Word();
     word=this.form.value;
     word.status="Chưa duyệt";
@@ -71,5 +75,6 @@ export class NewWordComponent implements OnInit {
           this.appComponent.alertWithSuccess(response);
           console.log(response);})
       }
+    this.reset();
   }
 }
