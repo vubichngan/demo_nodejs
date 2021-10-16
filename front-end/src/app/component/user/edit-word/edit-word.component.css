@@ -37,3 +37,10 @@ input.input, select{
     margin-top: 8px;
 }
 
+.card{
+    position: fixed;
+    right: 5px;
+    bottom: 50%;
+    z-index: 1;
+    border: 1px solid red;
+}

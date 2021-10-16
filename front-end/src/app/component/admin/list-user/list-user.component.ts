@@ -17,6 +17,7 @@ export class ListUserComponent implements OnInit {
 
   search='';
   userList:User[];
+  p: number = 1;
   userListFilter:User[];
   // user_name:String;
   // password: String;
@@ -113,7 +114,7 @@ export class ListUserComponent implements OnInit {
             element.status="Kích hoạt";
           }else if(element.status==='0'){
             element.status="Khóa";
-          }else element.status="Bị báo cáo"
+          }else element.status="Bị báo cáo";
         })
         this.userListFilter=this.userList;
         this.status="1";

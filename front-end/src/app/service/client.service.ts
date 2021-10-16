@@ -35,6 +35,10 @@ export class ClientService {
     return this.WebReqService.get('word');
   }
 
+  getWordL(){
+    return this.WebReqService.get('word/getWord');
+  }
+
   createUser(user:any){
     return this.WebReqService.postU('user/create',user,this.noAuthHeader);
   }

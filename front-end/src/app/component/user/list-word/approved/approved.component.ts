@@ -12,9 +12,10 @@ import { ListWordComponent } from '../list-word.component';
 })
 export class ApprovedComponent implements OnInit {
 
-  wordListFilter:Word[];
+  wordListFilter:any[];
   wordList:Word[];
   search='';
+  p: number = 1;
   constructor(private clientService: ClientService,private userComponent: UserComponent,private listWordComponent: ListWordComponent) { }
 
   ngOnInit(): void {

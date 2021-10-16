@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
 import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ListWordComponent implements OnInit {
   }
 
   reset(component){
-    this.clientService.getWord().subscribe((response: any)=>{
+    this.clientService.getWordL().subscribe((response: any)=>{
       component.wordList= response.filter(s => s.user_name==this.userComponent.userName);
       component.wordList= response.filter(s => s.status===this.status);
       component.wordList.forEach(function(element){element.isChecked=false;})
@@ -60,6 +61,21 @@ export class ListWordComponent implements OnInit {
     }
   }
 
+  confirmDialogDelete(id:any,component){
+    Swal.fire({
+      title: 'Bạn chắc chắn muốn xóa từ này?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteWord(id,component)
+      }
+    })
+  }
+
   deleteWord(id:any,component){
     this.clientService.deleteWord(id).subscribe((response: any)=>{
       this.reset(component);
@@ -70,11 +86,27 @@ export class ListWordComponent implements OnInit {
     )
   }
 
-  updateWordList(component){
-    for(var i=0;i<component.checkedUserList.length;i++){
-      this.deleteWord(component.checkedUserList[i]._id,component);
-    }
+  confirmDeleteWordList(component){
+    Swal.fire({
+      title: 'Bạn chắc chắn muốn xóa các từ này?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        for(var i=0;i<component.checkedUserList.length;i++){
+          this.deleteWord(component.checkedUserList[i]._id,component);
+        }
+      }
+    })
   }
+  // updateWordList(component){
+  //   for(var i=0;i<component.checkedUserList.length;i++){
+  //     this.deleteWord(component.checkedUserList[i]._id,component);
+  //   }
+  // }
 
   onKey(event, component){
     component.search = event.target.value;

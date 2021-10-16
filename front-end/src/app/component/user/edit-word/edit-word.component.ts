@@ -18,6 +18,7 @@ export class EditWordComponent implements OnInit {
   imgData: string;
   id;
   img;
+  comment;
   constructor(private router: Router,private fb: FormBuilder,private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
@@ -50,6 +51,7 @@ export class EditWordComponent implements OnInit {
     var word= new Word();
     this.clientService.getWord().subscribe((response: any)=>{
       word= response.filter(s => s._id==this.id);
+      this.comment=word[0].comment;
       if(word[0].anh==null){
         this.imgData="/assets/image/image.png";
       }else this.imgData=word[0].anh;
@@ -87,16 +89,17 @@ async  updateWord(){
     var words=new Word();
     words=this.form.value;
     words._id=this.id;
+    words.comment="";
     if(words.status=="Từ chối"){
       words.status="Chưa duyệt";
     }
-    console.log(words);
      this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
       this.appComponent.alertWithSuccess(response);
+      this.router.navigateByUrl('/user/list-word/notApprovedYet');
     },
     err=>{
       this.appComponent.erroAlert('Update error: '+err);
     })
-    this.router.navigate(['/user/list-word/notApprovedYet']);
+    
   }
 }

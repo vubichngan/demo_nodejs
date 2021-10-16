@@ -12,11 +12,12 @@ const Word = new Schema({
   nghia_vi: String,
   anh:String,
   tu_lienquan:[{
-    id_tu: Number
+    id_tu: Number,
   }],
   id_user:Number,
   id_manager:Number,
   status:String,
+  comment:String,
 },{
   timestamps: true,
 });

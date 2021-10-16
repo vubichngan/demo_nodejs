@@ -17,6 +17,7 @@ export class UserResComponent implements OnInit {
   userListFilter:User[];
   checkedUserList:any;
   isSelected:boolean;
+  p: number = 1;
   isDisableBtn:boolean;
   constructor(private clientService: ClientService, private appComponent:AppComponent,private manageComponent:ManageComponent) { }
 

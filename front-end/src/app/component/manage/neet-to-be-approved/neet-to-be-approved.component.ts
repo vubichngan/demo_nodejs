@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClientService } from 'src/app/service/client.service';
 import { Word } from 'src/app/model/word';
 import { ManageComponent } from '../manage.component';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-neet-to-be-approved',
@@ -12,10 +13,12 @@ export class NeetToBeApprovedComponent implements OnInit {
   
   search='';
   wordList:Word[];
-  wordListFilter:Word[];
+  wordListFilter:any[];
   status: String;
+  comment:String;
   checkedUserList:any;
   isSelected:boolean;
+  p: number = 1;
   isDisableBtn:boolean;
   constructor(private clientService: ClientService,private manageComponent:ManageComponent) { }
 
@@ -24,22 +27,49 @@ export class NeetToBeApprovedComponent implements OnInit {
   }
 
   reset(){
-    this.clientService.getWord().subscribe((response: any)=>{
+    this.clientService.getWordL().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status=='Chưa duyệt');
       this.wordList.forEach(function(element){element.isChecked=false;})
       this.wordListFilter=this.wordList;
+      console.log(this.wordListFilter);
       this.status="Đã duyệt";
       this.isSelected=false;
       this.isDisableBtn=true;
+      this.comment="";
     })
   }
   
+  commentWord(id: any,i){
+    Swal.fire({
+      title: 'Góp ý',
+      html: `<textarea id="comment" class="swal2-textarea" placeholder="Comment"></textarea>`,
+      confirmButtonText: 'Save',
+      focusConfirm: false,
+      preConfirm: () => {
+        const comment = Swal.getPopup().querySelector('#comment').value
+        if (!comment) {
+          Swal.showValidationMessage(`Please enter comment`)
+        }
+        return { comment: comment}
+      }
+    }).then((result) => {
+      if ("dismiss" in result) return;
+      this.comment=result.value.comment;
+      this.updateWordStatus(id,i,"Từ chối");
+    })
+    
+  }
+
     updateWordStatus(id: any,i,status: String){
       var word=new Word();
       word._id=id;
       word.status=status;
+      if(this.comment!==""){
+        word.comment=this.comment;
+      }
       word.tu_lienquan=this.wordListFilter[i].tu_lienquan;
       word.id_manager=this.manageComponent.idUser;
+      console.log(word);
       this.clientService.updateWord(id,word).subscribe((response: any)=>{
         this.reset();
       })

@@ -20,9 +20,11 @@ cac rang buoc them sua/
 chinh model word/
 search/
 manage cu bao user/
+trang manage tu choi/
+canh bao xoa/
+phan trang 35:36/55:00 /
+danh sach word ket noi join/
 
 xoa anh
-phan trang 35:36/55:00
 trang tim kiem
-trang admin tu choi
-danh sach word ket noi join
+tulien quan edit add

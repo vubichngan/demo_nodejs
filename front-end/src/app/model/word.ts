@@ -17,4 +17,5 @@ export class Word {
     status:String;
     id_manager:Number;
     isChecked:boolean;
+    comment: String;
 }

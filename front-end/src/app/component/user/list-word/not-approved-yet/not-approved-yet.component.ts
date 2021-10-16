@@ -11,11 +11,12 @@ import { Word } from 'src/app/model/word';
 export class NotApprovedYetComponent implements OnInit {
 
   search='';
-  wordListFilter:Word[];
+  wordListFilter:any[];
   wordList:Word[];
   checkedUserList:any;
   isDisableBtn:boolean;
   isSelected:boolean;
+  p: number = 1;
   constructor(private listWordComponent: ListWordComponent) { }
 
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class NotApprovedYetComponent implements OnInit {
   }
 
   deleteWord(id){
-    this.listWordComponent.deleteWord(id, this);
+    this.listWordComponent.confirmDialogDelete(id, this);
   }
 
   onKey(event: any){
@@ -48,7 +49,7 @@ export class NotApprovedYetComponent implements OnInit {
   }
 
   updateWordList(){
-    this.listWordComponent.updateWordList(this);
+    this.listWordComponent.confirmDeleteWordList(this);
   }
 
 }

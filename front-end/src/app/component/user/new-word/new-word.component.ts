@@ -8,6 +8,7 @@ import { FormGroup, FormControl, FormBuilder,Validators,FormArray} from '@angula
 
 
 
+
 @Component({
   selector: 'app-new-word',
   templateUrl: './new-word.component.html',
@@ -17,6 +18,8 @@ export class NewWordComponent implements OnInit {
 
   form:FormGroup;
   imgData: string;
+  wordList:Word[];
+  wordListFilter:any[];
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent,
     private http:HttpClient,private fb: FormBuilder) { }
 
@@ -24,12 +27,21 @@ export class NewWordComponent implements OnInit {
     this.reset();
   }
   
+  get(){
+    this.clientService.getWordL().subscribe((response: any)=>{
+      this.wordList= response.filter(s => s.user_name==this.userComponent.userName);
+      this.wordList= response.filter(s => s.status!=="Từ chối");
+      this.wordListFilter=this.wordList;
+    })
+  }
+
   onFileSelect(event: Event){
     this.userComponent.onFileSelect(event,this);
   }
 
   reset(){
     this.userComponent.newForm(this);
+    this.get();
     this.imgData="/assets/image/image.png";
   }
 
@@ -58,23 +70,25 @@ export class NewWordComponent implements OnInit {
     word=this.form.value;
     word.status="Chưa duyệt";
     word.id_user=this.userComponent.idUser;
-    if(this.form.value.anh!=null){
-      const profileData = new FormData();
-      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-      this.clientService.createImg(profileData).subscribe((response: any)=>{
-        word._id=response._id;
-        this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
-          this.appComponent.alertWithSuccess(response);
-        },
-        err=>{
-          this.appComponent.erroAlert('Update error: '+err);
-        })
-      })
-    }else {
-        this.clientService.createWord(word).subscribe((response: any)=>{
-          this.appComponent.alertWithSuccess(response);
-          console.log(response);})
-      }
-    this.reset();
+    console.log(word);
+    console.log(this.form.value);
+    // if(this.form.value.anh!=null){
+    //   const profileData = new FormData();
+    //   profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+    //   this.clientService.createImg(profileData).subscribe((response: any)=>{
+    //     word._id=response._id;
+    //     this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
+    //       this.appComponent.alertWithSuccess("Create successfully");
+    //     },
+    //     err=>{
+    //       this.appComponent.erroAlert('Update error: '+err);
+    //     })
+    //   })
+    // }else {
+    //     this.clientService.createWord(word).subscribe((response: any)=>{
+    //       this.appComponent.alertWithSuccess("Create successfully");
+    //     })
+    //   }
+    // this.reset();
   }
 }

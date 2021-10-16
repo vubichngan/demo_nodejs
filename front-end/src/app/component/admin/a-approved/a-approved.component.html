@@ -14,16 +14,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let word of wordListFilter; index as i">
+        <tr *ngFor="let word of wordListFilter| paginate: { itemsPerPage: 5, currentPage: p }; index as i">
           <th scope="row">{{i+1}}</th> 
           <td>{{word.tu.tu_en}} {{word.tu.tu_loai}} {{word.tu.phien_am}}</td>
           <td>{{word.nghia_en}}</td>
           <td>{{word.nghia_vi}}</td> 
           <td><img src="{{word.anh}}" alt="anh"></td>
-          <td><p *ngFor="let tu_lq of word.tu_lienquan">{{tu_lq.id_tu}}</p></td>
-          <td>{{word.id_user}}</td>
-          <td>{{word.id_manager}}</td>
+          <td><p *ngFor="let tu_lq of word.ds_tlq">{{tu_lq.tu.tu_en}} {{tu_lq.tu.tu_loai}} {{tu_lq.tu.phien_am}}</p></td>
+          <td *ngFor="let user of word.user">{{user.user_name}}</td>
+          <td *ngFor="let manager of word.manager">{{manager.user_name}}</td>
         </tr>
       </tbody>
     </table>
+    <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
 

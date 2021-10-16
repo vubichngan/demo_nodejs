@@ -12,12 +12,13 @@ import { ManageComponent } from '../manage.component';
 export class MApprovedComponent implements OnInit {
 
   wordList:Word[];
-  wordListFilter:Word[];
+  wordListFilter:any[];
+  p: number = 1;
   search='';
   constructor(private clientService: ClientService,private manageComponent:ManageComponent) { }
 
   ngOnInit(): void {
-    this.clientService.getWord().subscribe((response: any)=>{
+    this.clientService.getWordL().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status==="Đã duyệt");
       this.wordList= response.filter(s => s.id_manager===this.manageComponent.idUser);
       this.wordListFilter=this.wordList;

@@ -13,11 +13,12 @@ export class ANeetApprovedComponent implements OnInit {
 
   search='';
   wordList:Word[];
-  wordListFilter:Word[];
+  p: number = 1;
+  wordListFilter:any[];
   constructor(private clientService: ClientService, private adminComponent:AdminComponent) { }
 
   ngOnInit(): void {
-    this.clientService.getWord().subscribe((response: any)=>{
+    this.clientService.getWordL().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status=='Chưa duyệt');
       this.wordListFilter=this.wordList;
     })

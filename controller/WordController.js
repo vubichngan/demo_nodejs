@@ -14,6 +14,17 @@ class WordController{
 
 getWord(req,res){
     Word.aggregate([
+        {$graphLookup:
+            {
+                from: 'word_lists',
+                startWith: "$tu_lienquan.id_tu",
+                connectFromField: 'tu_lienquan',
+                connectToField: 'id',
+                as: 'ds_tlq',
+                maxDepth: 1,
+                depthField: 'tr',
+            }
+        },
         {$lookup:
             {
                 from:'users',
@@ -21,12 +32,18 @@ getWord(req,res){
                 foreignField: '_id',
                 as: 'user'
             }
-
+        },
+        {$lookup:
+            {
+                from:'users',
+                localField: 'id_manager',
+                foreignField: '_id',
+                as: 'manager'
+            }
         }
     ],function (err,re) {
             if (err) throw err;
             res.json(re);
-            console.log(re);
         })
 }
 

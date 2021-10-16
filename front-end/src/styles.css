@@ -10,6 +10,9 @@
 
 
 /* reset CSS */
+.swal2-popup{
+    justify-content:initial !important;
+}
 
 body {
     font-family: "Lato", sans-serif;

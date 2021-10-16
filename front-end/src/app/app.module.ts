@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
@@ -61,6 +61,7 @@ import { UserResComponent } from './component/manage/user-res/user-res.component
     FormsModule,
     ReactiveFormsModule,
     Ng2SearchPipeModule,
+    NgxPaginationModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

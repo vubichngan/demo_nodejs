@@ -11,10 +11,11 @@ export class UnapprovedComponent implements OnInit {
 
   search='';
   wordList:Word[];
-  wordListFilter:Word[];
+  wordListFilter:any[];
   checkedUserList:any;
   isDisableBtn:boolean;
   isSelected:boolean;
+  p: number = 1;
   constructor(private listWordComponent: ListWordComponent) { }
 
   ngOnInit(): void {
@@ -39,11 +40,11 @@ export class UnapprovedComponent implements OnInit {
   }
 
   deleteWord(id){
-    this.listWordComponent.deleteWord(id, this);
+    this.listWordComponent.confirmDialogDelete(id, this);
   }
 
-  updateWordList(){
-    this.listWordComponent.updateWordList(this);
+  deleteWordList(){
+    this.listWordComponent.confirmDeleteWordList(this);
   }
 
   onKey(event: any){

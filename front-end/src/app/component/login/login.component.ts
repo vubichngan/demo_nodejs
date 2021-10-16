@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.clientService.loginUser(form.value).subscribe(
       res=>{
         this.clientService.setToken(res['token']);
-        if(this.clientService.getUserPayload().status=="1"){
+        if(this.clientService.getUserPayload().status!=="0"){
           if(this.clientService.getUserPayload().permission==="2"){
             this.router.navigate(['/user/list-word/notApprovedYet']);
           }else if(this.clientService.getUserPayload().permission==="1"){

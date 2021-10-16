@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of userListFilter; index as i">
+      <tr *ngFor="let user of userListFilter| paginate: { itemsPerPage: 5, currentPage: p }; index as i">
         <td><input type="checkbox" name="itemCheckbox" (change)="isAllSelected()" [(ngModel)]="user.isChecked"></td>
         <th scope="row">{{i+1}}</th>
         <td>{{user.user_name}}</td>
@@ -30,5 +30,6 @@
     </tbody>
   </table>
 </form>
+<pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
 
     
