@@ -7,7 +7,6 @@ import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ManageComponent } from './component/manage/manage.component';
 import { RegisterComponent } from './component/register/register.component';
-import { SearchComponent } from './component/search/search.component';
 import { UserComponent } from './component/user/user.component';
 import { NewWordComponent } from './component/user/new-word/new-word.component';
 import { EditWordComponent } from './component/user/edit-word/edit-word.component';
@@ -21,15 +20,18 @@ import { ListUserComponent } from './component/admin/list-user/list-user.compone
 import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
 import { AApprovedComponent } from './component/admin/a-approved/a-approved.component';
 import { UserResComponent } from './component/manage/user-res/user-res.component';
+import { SearchComponent } from './component/home/search/search.component';
+import { DetailWordComponent } from './component/home/detail-word/detail-word.component';
 
 
 
 const routes: Routes = [
-  {path:'', redirectTo: '/search', pathMatch: 'full'},
-  {path:'home', component: HomeComponent},
+  {path:'', redirectTo: '/home/search', pathMatch: 'full'},
+  {path:'home', component: HomeComponent, children:[
+    {path:'detail', component: DetailWordComponent},
+    {path:'search', component: SearchComponent}]},
   {path:'login', component: LoginComponent},
   {path:'register', component: RegisterComponent},
-  {path:'search', component: SearchComponent},
   {path:'admin', component: AdminComponent, canActivate: [AuthGuard], children:[
     {path:'list-user', component: ListUserComponent},
     {path:'aapproved', component: AApprovedComponent},
@@ -43,7 +45,7 @@ const routes: Routes = [
   {path:'user', component: UserComponent, canActivate: [AuthGuard], children:[
     {path:'new-word', component: NewWordComponent},
     {path:'edit-word', component: EditWordComponent},
-    {path:'list-word', component: ListWordComponent, canActivate: [AuthGuard], children:[
+    {path:'list-word', component: ListWordComponent, children:[
       {path:'notApprovedYet', component: NotApprovedYetComponent},
       {path:'approved', component: ApprovedComponent},
       {path:'unapproved', component: UnapprovedComponent},

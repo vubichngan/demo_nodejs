@@ -3,13 +3,16 @@ const Word=require('../models/Word');
 class WordController{
     
     index(req,res,next){
+        
         Word.find({},function(err,word){
             if(!err){
                 res.send(word);
             }else{
                 res.status(400).json({Error:'ERROR!!!'});
             }
-        });
+        }).sort({
+            "tu.tu_en":1
+        })
     }
 
 getWord(req,res){

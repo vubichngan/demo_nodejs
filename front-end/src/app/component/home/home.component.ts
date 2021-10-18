@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadService } from  '../../service/upload.service';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Word } from 'src/app/model/word';
+import { ClientService } from 'src/app/service/client.service';
 
 @Component({
   selector: 'app-home',
@@ -10,35 +11,25 @@ import { Word } from 'src/app/model/word';
 })
 export class HomeComponent implements OnInit {
   
-  form: FormGroup;
-  imgData: string;
-  word:Word;
-  constructor(private fileUploadService: UploadService) { }
+  
+  id;
+  constructor(private clientService: ClientService) { }
 
   ngOnInit(): void {
-      this.form= new FormGroup({
-          image: new FormControl(null),
+  }
+
+  getWordId(id){
+    this.id=id;
+  }
+
+  searchWord(text:any){
+    if(text!==""){
+      var word=new Word();
+      this.clientService.getWordL().subscribe((response: any)=>{
+        word= response.filter(s => s.tu.tu_en.toLowerCase().indexOf(text.toLowerCase())!==-1);
+        this.id=word[0]._id;
       })
-  }
-
-  // On file Select
-  onFileSelect(event: Event){
-    const file=(event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image:file});
-    const allowedMimeTypes=["image/png","image/jpeg","image/jpg"];
-    if(file && allowedMimeTypes.includes(file.type)){
-      const reader = new FileReader();
-      reader.onload=()=>{
-        this.imgData=reader.result as string;
-      };
-      reader.readAsDataURL(file);
     }
+    
   }
-
-  onSubmit(){
-      console.log(3435);
-      this.form.reset();
-      this.imgData=null;
-  }
-
 }

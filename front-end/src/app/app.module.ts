@@ -15,7 +15,6 @@ import { UserComponent } from './component/user/user.component';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { AdminComponent } from './component/admin/admin.component';
-import { SearchComponent } from './component/search/search.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ManageComponent } from './component/manage/manage.component';
 import { NewWordComponent } from './component/user/new-word/new-word.component';
@@ -30,6 +29,8 @@ import { ListUserComponent } from './component/admin/list-user/list-user.compone
 import { ANeetApprovedComponent } from './component/admin/a-neet-approved/a-neet-approved.component';
 import { AApprovedComponent } from './component/admin/a-approved/a-approved.component';
 import { UserResComponent } from './component/manage/user-res/user-res.component';
+import { SearchComponent } from './component/home/search/search.component';
+import { DetailWordComponent } from './component/home/detail-word/detail-word.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,6 @@ import { UserResComponent } from './component/manage/user-res/user-res.component
     HomeComponent,
     LoginComponent,
     AdminComponent,
-    SearchComponent,
     RegisterComponent,
     ManageComponent,
     NewWordComponent,
@@ -52,7 +52,9 @@ import { UserResComponent } from './component/manage/user-res/user-res.component
     ListUserComponent,
     ANeetApprovedComponent,
     AApprovedComponent,
-    UserResComponent
+    UserResComponent,
+    SearchComponent,
+    DetailWordComponent
   ],
   imports: [
     BrowserModule,

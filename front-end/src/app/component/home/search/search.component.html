@@ -1,0 +1,33 @@
+<div>
+    <div class="nav justify-content-center imgDec">
+        <img src="https://sg-res.9appsinstall.com/sg/res/jpg/5e/b7/9cc50186749cdb4f5207851c6373-1od1.jpg?x-oss-process=style/mq200" alt="icon dictionary">
+    </div>
+    <div class="nav justify-content-center">
+        <form #formSearch="ngForm"class="form-inline my-2 my-lg-0 nav justify-content-center col-4" >
+            <input class="form-control mr-sm-2 col-7" type="search" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="wordSearch" (keyup)="onKey($event)" >
+        <a class="btn btn-primary my-2 my-sm-0" routerLink='/home/detail' (click)="searchWord(wordSearch)">Search</a>
+        </form>
+    </div>
+</div>
+<div class="row mt-5 mx-3">
+  <div class="col-sm-3" *ngFor="let word of wordListFilter| paginate: { itemsPerPage: 24, currentPage: p }">
+    <div class="list-group ">
+      <button class="list-group-item  my-2 t" type="button" routerLink='/home/detail' (click)="getWordId(word._id)">
+        {{word.tu.tu_en}}
+      </button>
+    </div>
+    <!-- <div class="card" >
+      <div class="card-body">
+        {{word.tu.tu_en}}
+      </div>
+    </div> -->
+  </div>
+  
+  
+</div>
+
+
+  <pagination-controls (pageChange)="p = $event" class="float-right"></pagination-controls>
+  <!-- <div class="nav justify-content-center my-5 py-5" [hidden]="!isHide || t ===''">
+    <h5 class="d-inline">Không tìm thấy <h4 class="d-inline" style="color: red;"> {{t}} !!!</h4></h5>
+</div> -->

@@ -72,23 +72,23 @@ export class NewWordComponent implements OnInit {
     word.id_user=this.userComponent.idUser;
     console.log(word);
     console.log(this.form.value);
-    // if(this.form.value.anh!=null){
-    //   const profileData = new FormData();
-    //   profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-    //   this.clientService.createImg(profileData).subscribe((response: any)=>{
-    //     word._id=response._id;
-    //     this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
-    //       this.appComponent.alertWithSuccess("Create successfully");
-    //     },
-    //     err=>{
-    //       this.appComponent.erroAlert('Update error: '+err);
-    //     })
-    //   })
-    // }else {
-    //     this.clientService.createWord(word).subscribe((response: any)=>{
-    //       this.appComponent.alertWithSuccess("Create successfully");
-    //     })
-    //   }
-    // this.reset();
+    if(this.form.value.anh!=null){
+      const profileData = new FormData();
+      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+      this.clientService.createImg(profileData).subscribe((response: any)=>{
+        word._id=response._id;
+        this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
+          this.appComponent.alertWithSuccess("Create successfully");
+        },
+        err=>{
+          this.appComponent.erroAlert('Update error: '+err);
+        })
+      })
+    }else {
+        this.clientService.createWord(word).subscribe((response: any)=>{
+          this.appComponent.alertWithSuccess("Create successfully");
+        })
+      }
+    this.reset();
   }
 }

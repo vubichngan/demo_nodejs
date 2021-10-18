@@ -27,4 +27,4 @@ danh sach word ket noi join/
 
 xoa anh
 trang tim kiem
-tulien quan edit add
+tulien quan edit add/
