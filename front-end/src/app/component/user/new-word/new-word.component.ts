@@ -5,6 +5,7 @@ import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
 import{HttpClient} from '@angular/common/http';
 import { FormGroup, FormControl, FormBuilder,Validators,FormArray} from '@angular/forms';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
 
@@ -20,6 +21,7 @@ export class NewWordComponent implements OnInit {
   imgData: string;
   wordList:Word[];
   wordListFilter:any[];
+   
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent,
     private http:HttpClient,private fb: FormBuilder) { }
 
@@ -29,8 +31,8 @@ export class NewWordComponent implements OnInit {
   
   get(){
     this.clientService.getWordL().subscribe((response: any)=>{
-      this.wordList= response.filter(s => s.user_name==this.userComponent.userName);
-      this.wordList= response.filter(s => s.status!=="Từ chối");
+      this.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
+      this.wordList= this.wordList.filter(s => s.status!=="Từ chối");
       this.wordListFilter=this.wordList;
     })
   }
@@ -67,28 +69,45 @@ export class NewWordComponent implements OnInit {
 
   createWord(){
     var word =new Word();
+    var t: Array<any> = []; 
+    var w:any[];
     word=this.form.value;
-    word.status="Chưa duyệt";
-    word.id_user=this.userComponent.idUser;
-    console.log(word);
-    console.log(this.form.value);
-    if(this.form.value.anh!=null){
-      const profileData = new FormData();
-      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-      this.clientService.createImg(profileData).subscribe((response: any)=>{
-        word._id=response._id;
-        this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
-          this.appComponent.alertWithSuccess("Create successfully");
-        },
-        err=>{
-          this.appComponent.erroAlert('Update error: '+err);
-        })
-      })
-    }else {
-        this.clientService.createWord(word).subscribe((response: any)=>{
-          this.appComponent.alertWithSuccess("Create successfully");
-        })
+    word.tu_lienquan.forEach(element=>{
+      w=this.wordListFilter.filter(s => s.id.toString()===element.id_tu)
+      if(w.length==0){
+        t.push(element.id_tu);
       }
-    this.reset();
+    })
+    if(t.length!=0){
+        Swal.fire({
+          title:'Thêm không thành công',
+          icon: 'error',
+          text:'Từ '+t+' chưa được tạo hãy thêm '+ t +' vào danh sách của bạn.'
+        })
+    }else{
+      word.status="Chưa duyệt";
+          word.id_user=this.userComponent.idUser;
+          console.log(word);
+          console.log(this.form.value);
+          if(this.form.value.anh!=null){
+            const profileData = new FormData();
+            profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+            this.clientService.createImg(profileData).subscribe((response: any)=>{
+              word._id=response._id;
+              this.clientService.updateWord(response._id,word).subscribe((response: any)=>{
+                this.appComponent.alertWithSuccess("Create successfully");
+              },
+              err=>{
+                this.appComponent.erroAlert('Update error: '+err);
+              })
+            })
+          }else {
+              this.clientService.createWord(word).subscribe((response: any)=>{
+                this.appComponent.alertWithSuccess("Create successfully");
+              })
+            }
+          this.reset();
+    }
+    
   }
 }

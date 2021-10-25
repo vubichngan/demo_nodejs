@@ -1,4 +1,4 @@
-<h1 class="text-center mb-5">Danh sách cần duyệt</h1>
+<h1 class="text-center mb-5">Danh sách duyệt lại</h1>
     <form (ngSubmit)="updateWordList()">
       <div class="d-flex">
         <div class="ml-5 pl-3 col-7">
@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let word of wordListFilter| paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+          <tr *ngFor="let word of wordListFilter| paginate: { itemsPerPage: 5, currentPage: p }; index as i" data-toggle="tooltip" data-placement="top" title={{word.comment}}>
             <td><input type="checkbox" name="itemCheckbox" [(ngModel)]="word.isChecked" (change)="isAllSelected()"></td>
             <th scope="row">{{i+1}}</th>
             <td>{{word.tu.tu_en}} {{word.tu.tu_loai}} {{word.tu.phien_am}}</td>

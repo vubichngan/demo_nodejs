@@ -49,13 +49,12 @@
                 <button class="btn btn-danger btn-sm mt-4 ml-3" (click)="removeTu_lienquan(i)">X</button>
                 <div class="col-6">
                   Từ tiếng Anh: 
-                  <input type="text" list="datalistOption" formControlName="id_tu" (keydown.tab)="addTu_lienquan($event)" required>
+                  <input type="text" class="pl-2" list="datalistOption" formControlName="id_tu" (keydown.tab)="addTu_lienquan($event)" required>
                   <!-- <select name="id_tu"  formControlName="id_tu" required>
                     <option *ngFor="let word of wordListFilter" value={{word.id}}>{{word.tu.tu_en}}{{word.tu.tu_loai}}{{word.tu.phien_am}}</option>
                   </select> -->
                   <datalist id="datalistOption">
-                    <option  *ngFor="let word of wordListFilter" value={{word.id}}> {{word.tu.tu_en}} {{word.tu.tu_loai}}{{word.tu.phien_am}}
-                    
+                    <option *ngFor="let word of wordListFilter" value={{word.id}}> {{word.tu.tu_en}} {{word.tu.tu_loai}}{{word.tu.phien_am}}{{word.nghia_vi}}
                   </datalist>
                 </div>
               </div>

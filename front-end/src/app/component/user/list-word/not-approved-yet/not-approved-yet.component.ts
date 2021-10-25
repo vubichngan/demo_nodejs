@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ListWordComponent } from '../list-word.component';
 import { Word } from 'src/app/model/word';
+import { ClientService } from 'src/app/service/client.service';
+import { UserComponent } from '../../user.component';
 
 
 @Component({
@@ -17,11 +19,21 @@ export class NotApprovedYetComponent implements OnInit {
   isDisableBtn:boolean;
   isSelected:boolean;
   p: number = 1;
-  constructor(private listWordComponent: ListWordComponent) { }
+  constructor(private listWordComponent: ListWordComponent,private clientService: ClientService,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
-    this.listWordComponent.reset(this);
-    this.listWordComponent.status="Chưa duyệt"
+    this.reset();
+  }
+
+  reset(){
+    this.clientService.getWordL().subscribe((response: any)=>{
+      this.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
+      this.wordList= this.wordList.filter(s => s.status==="Chưa duyệt"||s.status==="Duyệt lại");
+      this.wordList.forEach(function(element){element.isChecked=false;})
+      this.wordListFilter=this.wordList;
+      this.isDisableBtn=true;
+      this.isSelected=false;
+    })
   }
 
   getWordId(id: String){

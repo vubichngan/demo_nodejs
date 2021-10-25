@@ -21,8 +21,8 @@ export class ListWordComponent implements OnInit {
 
   reset(component){
     this.clientService.getWordL().subscribe((response: any)=>{
-      component.wordList= response.filter(s => s.user_name==this.userComponent.userName);
-      component.wordList= response.filter(s => s.status===this.status);
+      component.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
+      component.wordList= component.wordList.filter(s => s.status===this.status);
       component.wordList.forEach(function(element){element.isChecked=false;})
       component.wordListFilter=component.wordList;
       component.isDisableBtn=true;

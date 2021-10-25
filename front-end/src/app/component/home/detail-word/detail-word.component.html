@@ -17,11 +17,11 @@
             <h6 class="ml-3">- Nghĩa tiếng Anh</h6>
             <p class="text-info ml-5">{{word.nghia_en}}</p>
         </li>
-        <li class="list-group-item text-dark">
+        <li class="list-group-item text-dark" *ngIf="word.anh">
             <h5>Ảnh minh họa</h5>
             <img src="{{word.anh}}" alt="ảnh minh họa" class="mx-3 ml-3">
         </li>
-        <li class="list-group-item text-dark">
+        <li class="list-group-item text-dark" *ngIf="word.ds_tlq.length">
             <h5 class="mb-3">Các từ liên quan</h5>
             <a class="text-info ml-3 d-block" *ngFor="let tu_lq of word.ds_tlq" routerLink='/home/detail' (click)="getWordId(tu_lq._id)">
                - {{tu_lq.tu.tu_en}}

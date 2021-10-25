@@ -20,7 +20,7 @@ export class MApprovedComponent implements OnInit {
   ngOnInit(): void {
     this.clientService.getWordL().subscribe((response: any)=>{
       this.wordList= response.filter(s => s.status==="Đã duyệt");
-      this.wordList= response.filter(s => s.id_manager===this.manageComponent.idUser);
+      this.wordList= this.wordList.filter(s => s.id_manager===this.manageComponent.idUser);
       this.wordListFilter=this.wordList;
     })
   }

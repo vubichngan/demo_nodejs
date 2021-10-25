@@ -5,6 +5,7 @@ import { AppComponent } from 'src/app/app.component';
 import { UserComponent } from '../user.component';
 import { FormGroup, FormControl,FormBuilder,Validators,FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 
 @Component({
@@ -19,12 +20,23 @@ export class EditWordComponent implements OnInit {
   id;
   img;
   comment;
+  wordList:Word[];
+  wordListFilter:any[];
   constructor(private router: Router,private fb: FormBuilder,private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
     this.userComponent.newForm(this);
     this.setWord();
     this.id=this.userComponent.wordId;
+  }
+
+  get(){
+    this.clientService.getWordL().subscribe((response: any)=>{
+      this.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
+      this.wordList= this.wordList.filter(s => s.status!=="Từ chối");
+      this.wordList= this.wordList.filter(s => s._id!==this.id);
+      this.wordListFilter=this.wordList;
+    })
   }
 
   onFileSelect(event: Event){
@@ -75,31 +87,43 @@ export class EditWordComponent implements OnInit {
         })
         this.tu_lienquan.push(t);
       }
+      this.get();
     })
   }
 
 async  updateWord(){
-    var profileData = new FormData();
-    if(this.form.value.anh!=this.img){
-      profileData.append("_id", this.id);
-      profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
-     var t= await this.clientService.updateImg(this.id,profileData).toPromise();
-     this.appComponent.alertWithSuccess(t);
-    }
-    var words=new Word();
+  var words =new Word();
+    var t: Array<any> = []; 
+    var w:any[];
     words=this.form.value;
-    words._id=this.id;
-    words.comment="";
-    if(words.status=="Từ chối"){
-      words.status="Chưa duyệt";
-    }
-     this.clientService.updateWord(this.id,words).subscribe((response: any)=>{
-      this.appComponent.alertWithSuccess(response);
-      this.router.navigateByUrl('/user/list-word/notApprovedYet');
-    },
-    err=>{
-      this.appComponent.erroAlert('Update error: '+err);
+    words.tu_lienquan.forEach(element=>{
+      w=this.wordListFilter.filter(s => s.id.toString()===element.id_tu.toString())
+      if(w.length==0){
+        t.push(element.id_tu);
+      }
     })
+    if(t.length!=0){
+        Swal.fire({
+          title:'Thêm không thành công',
+          icon: 'error',
+          text:'Từ '+t+' chưa được tạo hãy thêm từ '+ t +' vào danh sách của bạn.'
+        })
+    }else{
+      var profileData = new FormData();
+      if(this.form.value.anh!=this.img){
+        profileData.append("_id", this.id);
+        profileData.append("anh", this.form.value.anh, this.form.value.anh.name);
+      var p= await this.clientService.updateImg(this.id,profileData).toPromise();
+      this.appComponent.alertWithSuccess(t);
+      }
+      words._id=this.id;
+      if(words.status=="Từ chối"){
+        words.status="Duyệt lại";
+      }
+      var v= await this.clientService.updateWord(this.id,words).toPromise();
+      this.appComponent.alertWithSuccess(v);
+      this.router.navigateByUrl('/user/list-word/notApprovedYet');
+    }
     
   }
 }

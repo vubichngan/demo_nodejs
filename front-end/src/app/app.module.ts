@@ -31,6 +31,7 @@ import { AApprovedComponent } from './component/admin/a-approved/a-approved.comp
 import { UserResComponent } from './component/manage/user-res/user-res.component';
 import { SearchComponent } from './component/home/search/search.component';
 import { DetailWordComponent } from './component/home/detail-word/detail-word.component';
+import { ReApprovalComponent } from './component/manage/re-approval/re-approval.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DetailWordComponent } from './component/home/detail-word/detail-word.co
     AApprovedComponent,
     UserResComponent,
     SearchComponent,
-    DetailWordComponent
+    DetailWordComponent,
+    ReApprovalComponent
   ],
   imports: [
     BrowserModule,

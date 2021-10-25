@@ -14,7 +14,7 @@ export class Word {
         id_tu: Number,
       }];
     id_user:Number;
-    status:String;
+    status:String;// đã duyệt, chưa duyệt, duyệt lại, từ chối.
     id_manager:Number;
     isChecked:boolean;
     comment: String;

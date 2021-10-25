@@ -19,7 +19,7 @@ export class ApprovedComponent implements OnInit {
   constructor(private clientService: ClientService,private userComponent: UserComponent,private listWordComponent: ListWordComponent) { }
 
   ngOnInit(): void {
-    this.clientService.getWord().subscribe((response: any)=>{
+    this.clientService.getWordL().subscribe((response: any)=>{
       const wordListA= response.filter(s => s.id_user==this.userComponent.idUser);
       this.wordList= wordListA.filter(s => s.status==="Đã duyệt");
       this.wordList.forEach(function(element){element.isChecked=false;})

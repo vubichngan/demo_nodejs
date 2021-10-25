@@ -48,7 +48,11 @@
             <div [formGroupName]="i" class="d-flex">
               <button class="btn btn-danger btn-sm mt-4 ml-3" (click)="removeTu_lienquan(i)">X</button>
               <div class="col-3">
-                Từ tiếng Anh: <input type="text" formControlName="id_tu" class="input" (keydown.tab)="addTu_lienquan($event)" required>
+                Từ tiếng Anh: 
+                <input type="text" list="datalistOpti" formControlName="id_tu" class="input pl-2" (keydown.tab)="addTu_lienquan($event)" required>
+                <datalist id="datalistOpti">
+                  <option *ngFor="let word of wordListFilter" value={{word.id}}> {{word.tu.tu_en}} {{word.tu.tu_loai}}{{word.tu.phien_am}} {{word.nghia_vi}}
+                </datalist>
               </div>
             </div>
             <div *ngIf="addForm.submitted && tu_lienquan.controls[i].get('id_tu').errors?.required">

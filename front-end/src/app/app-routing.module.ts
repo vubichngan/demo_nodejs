@@ -22,6 +22,7 @@ import { AApprovedComponent } from './component/admin/a-approved/a-approved.comp
 import { UserResComponent } from './component/manage/user-res/user-res.component';
 import { SearchComponent } from './component/home/search/search.component';
 import { DetailWordComponent } from './component/home/detail-word/detail-word.component';
+import { ReApprovalComponent } from './component/manage/re-approval/re-approval.component';
 
 
 
@@ -41,6 +42,7 @@ const routes: Routes = [
     {path:'mapproved', component: MApprovedComponent},
     {path:'napproved', component: NeetToBeApprovedComponent},
     {path:'user', component: UserResComponent},
+    {path:'re-approval', component: ReApprovalComponent},
   ]},
   {path:'user', component: UserComponent, canActivate: [AuthGuard], children:[
     {path:'new-word', component: NewWordComponent},
