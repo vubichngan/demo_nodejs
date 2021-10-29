@@ -12,8 +12,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class ListWordComponent implements OnInit {
 
-   status: String;
-  
+  status;
   constructor(private clientService: ClientService,private appComponent: AppComponent,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
@@ -22,8 +21,8 @@ export class ListWordComponent implements OnInit {
   reset(component){
     this.clientService.getWordL().subscribe((response: any)=>{
       component.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
-      component.wordList= component.wordList.filter(s => s.status===this.status);
-      component.wordList.forEach(function(element){element.isChecked=false;})
+      component.wordList= component.wordList.filter(this.status);
+      component.wordList.forEach(function(element){element.isChecked=false;});
       component.wordListFilter=component.wordList;
       component.isDisableBtn=true;
       component.isSelected=false;

@@ -22,19 +22,11 @@ export class NotApprovedYetComponent implements OnInit {
   constructor(private listWordComponent: ListWordComponent,private clientService: ClientService,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
-    this.reset();
+    this.listWordComponent.status=s => s.status==='Chưa duyệt'||s.status==='Duyệt lại';
+    this.listWordComponent.reset(this);
   }
 
-  reset(){
-    this.clientService.getWordL().subscribe((response: any)=>{
-      this.wordList= response.filter(s => s.id_user==this.userComponent.idUser);
-      this.wordList= this.wordList.filter(s => s.status==="Chưa duyệt"||s.status==="Duyệt lại");
-      this.wordList.forEach(function(element){element.isChecked=false;})
-      this.wordListFilter=this.wordList;
-      this.isDisableBtn=true;
-      this.isSelected=false;
-    })
-  }
+  
 
   getWordId(id: String){
     this.listWordComponent.getWordId(id);

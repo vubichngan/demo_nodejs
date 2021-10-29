@@ -101,7 +101,7 @@ export class ListUserComponent implements OnInit {
   }
     reset(){
       this.clientService.getUser().subscribe((response: any)=>{
-        this.userList=response;
+        this.userList=response.filter(s =>s._id!==this.adminComponent.idUser);
         this.userList.forEach(function(element){
           element.isChecked=false;
           if(element.permission==='0'){

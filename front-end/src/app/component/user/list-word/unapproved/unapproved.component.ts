@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ListWordComponent } from '../list-word.component';
 import { Word } from 'src/app/model/word';
+import { ClientService } from 'src/app/service/client.service';
+import { UserComponent } from '../../user.component';
 
 @Component({
   selector: 'app-unapproved',
@@ -16,12 +18,13 @@ export class UnapprovedComponent implements OnInit {
   isDisableBtn:boolean;
   isSelected:boolean;
   p: number = 1;
-  constructor(private listWordComponent: ListWordComponent) { }
+  constructor(private listWordComponent: ListWordComponent,private clientService: ClientService,private userComponent: UserComponent) { }
 
   ngOnInit(): void {
+    this.listWordComponent.status=s => s.status==="Từ chối";
     this.listWordComponent.reset(this);
-    this.listWordComponent.status="Từ chối"
   }
+
 
   getWordId(id: String){
     this.listWordComponent.getWordId(id);

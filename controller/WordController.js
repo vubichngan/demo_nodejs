@@ -2,7 +2,7 @@ const cors = require('cors');
 const Word=require('../models/Word');
 class WordController{
     
-    index(req,res,next){
+    index(req,res){
         
         Word.find({},function(err,word){
             if(!err){
@@ -10,9 +10,7 @@ class WordController{
             }else{
                 res.status(400).json({Error:'ERROR!!!'});
             }
-        }).sort({
-            "tu.tu_en":1
-        })
+        });
     }
 
 getWord(req,res){

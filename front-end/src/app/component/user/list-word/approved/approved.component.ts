@@ -22,7 +22,6 @@ export class ApprovedComponent implements OnInit {
     this.clientService.getWordL().subscribe((response: any)=>{
       const wordListA= response.filter(s => s.id_user==this.userComponent.idUser);
       this.wordList= wordListA.filter(s => s.status==="Đã duyệt");
-      this.wordList.forEach(function(element){element.isChecked=false;})
       this.wordListFilter=this.wordList;
       console.log(this.wordListFilter);
     })

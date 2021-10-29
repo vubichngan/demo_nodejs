@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
         this.clientService.setToken(res['token']);
         if(this.clientService.getUserPayload().status!=="0"){
           if(this.clientService.getUserPayload().permission==="2"){
-            this.router.navigate(['/user/list-word/notApprovedYet']);
+            this.router.navigate(['/user/user-home']);
           }else if(this.clientService.getUserPayload().permission==="1"){
-            this.router.navigate(['/manage/napproved']);
+            this.router.navigate(['/manage/manage-home']);
           }else
-            this.router.navigateByUrl('/admin/list-user');
+            this.router.navigateByUrl('/admin/admin-home');
         }else this.serverErrorMessage="Tài khoản của bạn đã bị khóa"
       },
       err=>{

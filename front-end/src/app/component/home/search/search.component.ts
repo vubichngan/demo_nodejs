@@ -22,6 +22,9 @@ export class SearchComponent implements OnInit {
       this.wordList=response;
       this.wordList= this.wordList.filter(s => s.status==="Đã duyệt");
       this.wordListFilter=this.wordList;
+      this.wordListFilter.sort((a, b) => {
+        return <any>new Date(a.tu.tu_en) - <any>new Date(b.tu.tu_en);
+      });
     })
     this.wordSearch="";
   }

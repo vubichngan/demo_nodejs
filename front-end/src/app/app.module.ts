@@ -32,6 +32,9 @@ import { UserResComponent } from './component/manage/user-res/user-res.component
 import { SearchComponent } from './component/home/search/search.component';
 import { DetailWordComponent } from './component/home/detail-word/detail-word.component';
 import { ReApprovalComponent } from './component/manage/re-approval/re-approval.component';
+import { UserHomeComponent } from './component/user/user-home/user-home.component';
+import { ManageHomeComponent } from './component/manage/manage-home/manage-home.component';
+import { AdminHomeComponent } from './component/admin/admin-home/admin-home.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { ReApprovalComponent } from './component/manage/re-approval/re-approval.
     UserResComponent,
     SearchComponent,
     DetailWordComponent,
-    ReApprovalComponent
+    ReApprovalComponent,
+    UserHomeComponent,
+    ManageHomeComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,
